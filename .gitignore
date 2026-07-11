@@ -39,3 +39,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# internal waitlist store (local preview)
+.data/
+
+# claude code local settings (machine-specific)
+.claude/settings.local.json

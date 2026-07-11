@@ -1,65 +1,85 @@
-import Image from "next/image";
+/*
+ * Event House — public landing page (hero-only, single viewport).
+ * Built: 2026-07-11
+ * Layout: A (stacked, §6.2) — hero copy centered in the upper viewport, the
+ * 3D phone rising into view from the bottom edge. Headline: Option A.
+ * See #eh-phone-slot (src/components/phone/phone-slot.tsx) for the swappable
+ * phone interior.
+ *
+ * Documented stack deviations from the static-HTML brief, per client request:
+ *   - Next.js 16 (App Router, TypeScript) + Tailwind v4 + shadcn/ui + Framer
+ *     Motion, scaffolded with create-next-app, instead of a single index.html.
+ *   - Fonts load via next/font/google (self-hosted, display=swap) instead of
+ *     a Google Fonts <link> tag — the React/Next best practice.
+ *   - The Android waitlist CTA morphs inline into an email field and POSTs to
+ *     /api/waitlist (Next.js Route Handler). Storage: Supabase when env keys
+ *     are present, otherwise an internal file-backed JSON store
+ *     (.data/waitlist.json) so the local preview works with zero setup.
+ *   - The static-build budgets (15KB CSS / 2KB JS) don't map to a framework
+ *     build and are superseded by the stack choice.
+ */
+import { Aurora } from "@/components/aurora";
+import { FadeIn } from "@/components/fade-in";
+import { Hero } from "@/components/hero";
+import { PhoneMockup } from "@/components/phone/phone-mockup";
+import { SiteNav } from "@/components/site-nav";
 
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
+    <div className="relative">
+      <section className="relative flex flex-col overflow-hidden sm:min-h-svh">
+        {/* Stacking order (§6.1): aurora → grain → phone → hero content */}
+        <Aurora />
+        <SiteNav />
+
+        <main className="relative z-10 flex flex-col items-center px-6 pt-[25vh] max-sm:pt-36 md:px-8 lg:px-12">
+          <Hero />
+        </main>
+
+        {/* Decorative product anchor — copy carries the information (§10) */}
+        <div
+          id="eh-phone-wrap"
+          aria-hidden="true"
+          className="relative z-[5] mx-auto mt-16 w-[min(300px,80vw)] md:w-[340px] lg:w-[380px]"
+        >
+          <FadeIn delay={0.36}>
+            <PhoneMockup />
+          </FadeIn>
+        </div>
+      </section>
+
+      <footer className="relative z-10 w-full">
+        {/* 96px below the phone's visible bottom edge (§7.8) */}
+        <div className="mx-auto flex max-w-[1200px] flex-wrap items-center justify-between gap-x-8 gap-y-2 px-6 pb-10 pt-24 text-xs text-ash md:px-8 lg:px-12">
+          <p>© 2026 Event House. A Lifestyle product.</p>
+          <p>
             <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
+              href="#"
+              className="transition-colors duration-150 hover:text-bone"
             >
-              Templates
-            </a>{" "}
-            or the{" "}
+              Privacy
+            </a>
+            <span className="mx-2">·</span>
             <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
+              href="#"
+              className="transition-colors duration-150 hover:text-bone"
             >
-              Learning
-            </a>{" "}
-            center.
+              Terms
+            </a>
+            <span className="mx-2">·</span>
+            <a
+              href="#"
+              className="transition-colors duration-150 hover:text-bone"
+            >
+              Contact
+            </a>
           </p>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
+      </footer>
+
+      {/* Faint full-page grain (§6.1 layer 3) — sits under content (z-10)
+       * and the phone (z-[5]), over the aurora. */}
+      <div className="grain z-[1]" aria-hidden="true" />
     </div>
   );
 }

@@ -1,36 +1,44 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Event House — landing page
 
-## Getting Started
+Single-viewport public landing page for Event House (an iOS-first social
+platform for discovering, hosting, and attending events). Hero-only by
+design: headline, two CTAs, an ambient Ember-Nightfall aurora, and a 3D
+iPhone mockup whose screen interior is a swappable slot.
 
-First, run the development server:
+Stack: Next.js 16 (App Router, TypeScript) · Tailwind CSS v4 · shadcn/ui ·
+Framer Motion.
+
+## Run it
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open http://localhost:3000. No further setup is needed — the Android
+waitlist stores entries in an internal file-backed store at
+`.data/waitlist.json`.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Waitlist backend
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+`POST /api/waitlist` (`src/app/api/waitlist/route.ts`) accepts
+`{ "email": "…" }` and persists through `src/lib/waitlist-store.ts`:
 
-## Learn More
+- **Default (internal storage):** `.data/waitlist.json`, zero setup.
+- **Supabase (free plan):** create a project, run `supabase/schema.sql` in
+  the SQL editor, then copy `.env.example` to `.env.local` and fill in
+  `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY`. The store switches over
+  automatically.
 
-To learn more about Next.js, take a look at the following resources:
+## Swapping the phone's screen content
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+The mockup is built in two layers (see the comment block at the top of
+`src/app/globals.css`):
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **Layer 1 — chrome** (`src/components/phone/phone-mockup.tsx`): device
+  frame, hardware, dynamic island, status bar, shadow, 3D transform.
+  Never changes.
+- **Layer 2 — content** (`src/components/phone/phone-slot.tsx`,
+  `#eh-phone-slot`): the placeholder interior. To install the real app UI,
+  empty this component's JSX and insert the new markup, keeping all styles
+  scoped under `#eh-phone-slot`.
