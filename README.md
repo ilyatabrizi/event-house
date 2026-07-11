@@ -1,5 +1,7 @@
 # Event House — landing page
 
+**Live:** https://event-house-alphaaagency.vercel.app
+
 Single-viewport public landing page for Event House (an iOS-first social
 platform for discovering, hosting, and attending events). Hero-only by
 design: headline, two CTAs, an ambient Ember-Nightfall aurora, and a 3D
@@ -42,3 +44,15 @@ The mockup is built in two layers (see the comment block at the top of
   `#eh-phone-slot`): the placeholder interior. To install the real app UI,
   empty this component's JSX and insert the new markup, keeping all styles
   scoped under `#eh-phone-slot`.
+
+## Deployment
+
+Hosted on Vercel (production: the Live link above). Deploy manually from the
+project root with:
+
+```bash
+vercel deploy --prod
+```
+
+For automatic push-to-deploy (with preview URLs on every branch/PR), connect
+the repo once under **Vercel → Project → Settings → Git**.
