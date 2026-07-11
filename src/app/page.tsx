@@ -22,6 +22,7 @@ import { Aurora } from "@/components/aurora";
 import { FadeIn } from "@/components/fade-in";
 import { Hero } from "@/components/hero";
 import { PhoneMockup } from "@/components/phone/phone-mockup";
+import { SiteFooter } from "@/components/site-footer";
 import { SiteNav } from "@/components/site-nav";
 
 export default function Home() {
@@ -48,34 +49,8 @@ export default function Home() {
         </div>
       </section>
 
-      <footer className="relative z-10 w-full">
-        {/* 96px below the phone's visible bottom edge (§7.8) */}
-        <div className="mx-auto flex max-w-[1200px] flex-wrap items-center justify-between gap-x-8 gap-y-2 px-6 pb-10 pt-24 text-xs text-ash md:px-8 lg:px-12">
-          <p>© 2026 Event House. A Lifestyle product.</p>
-          <p>
-            <a
-              href="#"
-              className="transition-colors duration-150 hover:text-bone"
-            >
-              Privacy
-            </a>
-            <span className="mx-2">·</span>
-            <a
-              href="#"
-              className="transition-colors duration-150 hover:text-bone"
-            >
-              Terms
-            </a>
-            <span className="mx-2">·</span>
-            <a
-              href="#"
-              className="transition-colors duration-150 hover:text-bone"
-            >
-              Contact
-            </a>
-          </p>
-        </div>
-      </footer>
+      {/* Shared footer — 96px below the phone's visible bottom edge (§7.8) */}
+      <SiteFooter />
 
       {/* Faint full-page grain (§6.1 layer 3) — sits under content (z-10)
        * and the phone (z-[5]), over the aurora. */}

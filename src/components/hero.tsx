@@ -1,6 +1,7 @@
 "use client";
 
 import { motion, useReducedMotion } from "framer-motion";
+import Link from "next/link";
 import { AppleGlyph } from "@/components/icons";
 import { buttonVariants } from "@/components/ui/button";
 import { WaitlistCta } from "@/components/waitlist-cta";
@@ -49,9 +50,9 @@ export function Hero() {
       >
         {/* A real link styled via shadcn buttonVariants — keeps native link
          * semantics (no forced role="button") for screen readers. */}
-        <a
+        <Link
           id="eh-cta-ios"
-          href="#"
+          href="/download"
           className={cn(
             buttonVariants(),
             "h-11 gap-2 rounded-full border-transparent bg-bone px-5 text-sm font-medium text-ink transition-transform duration-200 ease-out hover:bg-bone focus-visible:border-transparent focus-visible:ring-0 motion-safe:hover:scale-[1.02]",
@@ -60,7 +61,7 @@ export function Hero() {
           {/* Apple glyph stays Ink on Bone — never tinted Ember (§5.1.1) */}
           <AppleGlyph className="size-4" />
           Download for iOS
-        </a>
+        </Link>
         <WaitlistCta />
       </motion.div>
 
@@ -75,9 +76,9 @@ export function Hero() {
       <motion.div {...rise(5)} className="mt-6">
         {/* Announcement pill — its 1px Ember inner glow is a permitted UI
          * use of Ember (§5.1.1) */}
-        <a
+        <Link
           id="eh-announcement"
-          href="#"
+          href="/company"
           className="group inline-flex h-8 items-center rounded-full border border-bone/20 px-4 shadow-[inset_0_0_0_1px_rgba(255,91,61,0.18)]"
         >
           <span className="text-xs font-medium text-bone">
@@ -87,7 +88,7 @@ export function Hero() {
           <span className="text-xs font-medium text-ash transition-colors duration-150 group-hover:text-bone">
             Read the story →
           </span>
-        </a>
+        </Link>
       </motion.div>
     </div>
   );

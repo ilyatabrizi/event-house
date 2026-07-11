@@ -1,21 +1,26 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { MenuGlyph } from "@/components/icons";
 
-const NAV_ITEMS = [
-  "Product",
-  "Hosts",
-  "Rewards",
-  "Pricing",
-  "Changelog",
-  "Company",
+type NavItem = { label: string; href: string };
+
+const NAV_ITEMS: readonly NavItem[] = [
+  { label: "Product", href: "/product" },
+  { label: "Hosts", href: "/hosts" },
+  { label: "Rewards", href: "/rewards" },
+  { label: "Pricing", href: "/pricing" },
+  { label: "Changelog", href: "/changelog" },
+  { label: "Company", href: "/company" },
 ] as const;
 
 /* Items that stay visible between 600–899px (§9); the rest drop out. */
 const COMPACT_ITEMS = new Set(["Product", "Pricing", "Changelog"]);
 
-export function SiteNav() {
+/* overlay — floats over the landing hero (absolute, transparent).
+ * solid   — a normal header for interior pages (ink background + hairline). */
+export function SiteNav({ variant = "overlay" }: { variant?: "overlay" | "solid" }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
   const overlayRef = useRef<HTMLDivElement>(null);
@@ -57,11 +62,16 @@ export function SiteNav() {
     return () => document.removeEventListener("keydown", onKeyDown);
   }, [menuOpen]);
 
+  const navClass =
+    variant === "overlay"
+      ? "absolute inset-x-0 top-10 z-20"
+      : "sticky top-0 z-30 border-b border-ash/15 bg-ink/85 py-6 backdrop-blur-md";
+
   return (
-    <nav className="absolute inset-x-0 top-10 z-20">
+    <nav className={navClass}>
       <div className="mx-auto flex max-w-[1200px] items-center justify-between px-6 md:px-8 lg:px-12">
-        <a
-          href="#"
+        <Link
+          href="/"
           aria-label="Event House home"
           className="flex items-center gap-[10px]"
         >
@@ -69,26 +79,33 @@ export function SiteNav() {
           <span className="text-[15px] font-semibold tracking-[-0.01em] text-bone">
             Event House
           </span>
-        </a>
+        </Link>
 
         <ul className="hidden items-center gap-8 sm:flex">
           {NAV_ITEMS.map((item) => (
             <li
-              key={item}
-              className={COMPACT_ITEMS.has(item) ? undefined : "max-md:hidden"}
+              key={item.label}
+              className={
+                COMPACT_ITEMS.has(item.label) ? undefined : "max-md:hidden"
+              }
             >
-              <a
-                href="#"
+              <Link
+                href={item.href}
                 className="text-[13px] font-medium text-ash transition-colors duration-150 hover:text-bone"
               >
-                {item}
-              </a>
+                {item.label}
+              </Link>
             </li>
           ))}
         </ul>
 
         <div className="flex items-center gap-4">
-          <button id="eh-account" aria-label="Account" className="flex items-center gap-1">
+          <Link
+            id="eh-account"
+            href="/download"
+            aria-label="Get Event House"
+            className="flex items-center gap-1"
+          >
             <span className="flex h-7 w-7 items-center justify-center rounded-full border border-ash bg-ink text-[10px] font-medium text-bone">
               NS
             </span>
@@ -97,7 +114,7 @@ export function SiteNav() {
               aria-hidden="true"
               className="h-2 w-2 rounded-full bg-ember shadow-[0_0_6px_rgba(255,91,61,0.4)]"
             />
-          </button>
+          </Link>
 
           <button
             ref={menuButtonRef}
@@ -123,14 +140,14 @@ export function SiteNav() {
           className="fixed inset-0 z-50 flex flex-col items-center justify-center gap-5 bg-[rgba(14,11,16,0.96)]"
         >
           {NAV_ITEMS.map((item) => (
-            <a
-              key={item}
-              href="#"
+            <Link
+              key={item.label}
+              href={item.href}
               onClick={closeMenu}
               className="text-[15px] font-medium text-ash transition-colors duration-150 hover:text-bone"
             >
-              {item}
-            </a>
+              {item.label}
+            </Link>
           ))}
         </div>
       )}

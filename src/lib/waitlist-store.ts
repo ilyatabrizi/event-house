@@ -1,4 +1,5 @@
 import { promises as fs } from "node:fs";
+import os from "node:os";
 import path from "node:path";
 import { createClient } from "@supabase/supabase-js";
 
@@ -16,7 +17,21 @@ type WaitlistEntry = {
 
 export type AddResult = { duplicate: boolean };
 
-const DATA_FILE = path.join(process.cwd(), ".data", "waitlist.json");
+/* Where the file-backed fallback store lives. On a serverless host (Vercel,
+ * AWS Lambda) the project directory is read-only — only the OS temp dir is
+ * writable — so we write there. Locally we keep it in the project's .data/
+ * dir so entries persist across restarts. Override with WAITLIST_DATA_DIR.
+ * Note: on serverless this store is per-instance and ephemeral; set
+ * SUPABASE_URL + SUPABASE_SERVICE_ROLE_KEY for durable storage. */
+const isServerless = Boolean(
+  process.env.VERCEL || process.env.AWS_LAMBDA_FUNCTION_NAME,
+);
+const DATA_DIR =
+  process.env.WAITLIST_DATA_DIR ??
+  (isServerless
+    ? path.join(os.tmpdir(), "event-house")
+    : path.join(process.cwd(), ".data"));
+const DATA_FILE = path.join(DATA_DIR, "waitlist.json");
 
 function supabaseConfig() {
   const url = process.env.SUPABASE_URL;
