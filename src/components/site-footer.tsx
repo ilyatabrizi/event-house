@@ -10,7 +10,7 @@ const LEGAL_LINKS = [
 export function SiteFooter() {
   return (
     <footer className="relative z-10 w-full">
-      <div className="mx-auto flex max-w-[1200px] flex-wrap items-center justify-between gap-x-8 gap-y-2 px-6 pb-10 pt-24 text-xs text-ash md:px-8 lg:px-12">
+      <div className="mx-auto flex max-w-[1200px] flex-wrap items-center justify-between gap-x-8 gap-y-2 px-6 pb-10 pt-12 text-xs text-ash md:px-8 lg:px-12">
         <p>© 2026 Event House. A Lifestyle product.</p>
         <p className="flex items-center">
           {LEGAL_LINKS.map((link, i) => (

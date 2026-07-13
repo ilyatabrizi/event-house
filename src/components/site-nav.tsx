@@ -64,7 +64,7 @@ export function SiteNav({ variant = "overlay" }: { variant?: "overlay" | "solid"
 
   const navClass =
     variant === "overlay"
-      ? "absolute inset-x-0 top-10 z-20"
+      ? "fixed inset-x-0 top-0 z-40 bg-gradient-to-b from-ink/90 via-ink/50 to-transparent pb-8 pt-8"
       : "sticky top-0 z-30 border-b border-ash/15 bg-ink/85 py-6 backdrop-blur-md";
 
   return (

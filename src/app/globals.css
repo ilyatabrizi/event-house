@@ -269,6 +269,63 @@
   .aurora-b {
     transform: translate(28%, -4%);
   }
+  .eh-orb-drift-a,
+  .eh-orb-drift-b,
+  .eh-orb-drift-c {
+    animation: none;
+  }
+}
+
+/* ─── Luxury scroll atmosphere (landing showcase) ─────────────────────────
+ * Soft stage beam + horizon bloom + slow orb drift. Colors come from
+ * per-frame inline styles; this CSS only handles motion and shared shapes. */
+.eh-stage-beam {
+  background: linear-gradient(
+    to bottom,
+    rgba(242, 238, 231, 0.07) 0%,
+    rgba(242, 238, 231, 0.02) 35%,
+    transparent 70%
+  );
+}
+
+.eh-horizon {
+  background: linear-gradient(
+    to top,
+    rgba(14, 11, 16, 0.9) 0%,
+    rgba(14, 11, 16, 0.35) 45%,
+    transparent 100%
+  );
+}
+
+.eh-orb {
+  will-change: transform;
+}
+
+.eh-orb-drift-a {
+  animation: eh-orb-drift 26s ease-in-out infinite;
+}
+
+.eh-orb-drift-b {
+  animation: eh-orb-drift 32s ease-in-out infinite;
+  animation-delay: -11s;
+}
+
+.eh-orb-drift-c {
+  animation: eh-orb-drift 22s ease-in-out infinite;
+  animation-delay: -7s;
+}
+
+@keyframes eh-orb-drift {
+  0%,
+  100% {
+    transform: translate(0%, 0%) scale(1);
+  }
+  33% {
+    transform: translate(4%, 3%) scale(1.06);
+  }
+  66% {
+    transform: translate(-3%, 5%) scale(0.96);
+  }
 }
 
 /* ─── #eh-phone-slot scoped styles (Layer 2) ──────────────────────────────
