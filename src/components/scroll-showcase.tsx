@@ -90,6 +90,20 @@ const FRAMES = [
 
 const hardware = "w-[3px] bg-[linear-gradient(180deg,#4a4a4e,#1a1a1e)]";
 
+/* Static ember specks drifting upward — pure CSS, transform/opacity only. */
+const PARTICLES = [
+  { left: "8%", top: "72%", size: 3, duration: 14, delay: 0, tint: "ember" },
+  { left: "16%", top: "88%", size: 2, duration: 18, delay: -6, tint: "bone" },
+  { left: "27%", top: "78%", size: 4, duration: 16, delay: -11, tint: "ember" },
+  { left: "38%", top: "92%", size: 2, duration: 20, delay: -3, tint: "bone" },
+  { left: "52%", top: "84%", size: 3, duration: 15, delay: -9, tint: "ember" },
+  { left: "64%", top: "90%", size: 2, duration: 19, delay: -14, tint: "bone" },
+  { left: "76%", top: "76%", size: 4, duration: 13, delay: -5, tint: "ember" },
+  { left: "88%", top: "86%", size: 2, duration: 17, delay: -12, tint: "bone" },
+  { left: "94%", top: "70%", size: 3, duration: 21, delay: -8, tint: "ember" },
+  { left: "45%", top: "96%", size: 3, duration: 16, delay: -2, tint: "ember" },
+] as const;
+
 export function ScrollShowcase() {
   const reduceMotion = useReducedMotion();
   const trackRef = useRef<HTMLDivElement>(null);
@@ -107,6 +121,16 @@ export function ScrollShowcase() {
   });
 
   const phoneY = useTransform(smoothProgress, [0, 1], [28, -28]);
+  /* The phone slowly turns as screens change — spatial depth on scroll. */
+  const phoneRotateY = useTransform(
+    smoothProgress,
+    (p) => -12 + Math.sin(p * Math.PI * 2.4) * 8,
+  );
+  const phoneRotateX = useTransform(
+    smoothProgress,
+    (p) => 4 + Math.sin(p * Math.PI * 1.6) * 3,
+  );
+  const hintOpacity = useTransform(smoothProgress, [0, 0.06], [1, 0]);
 
   useMotionValueEvent(smoothProgress, "change", (p) => {
     const next = Math.round(
@@ -114,6 +138,17 @@ export function ScrollShowcase() {
     );
     setActive((prev) => (prev === next ? prev : next));
   });
+
+  function scrollToFrame(i: number) {
+    const track = trackRef.current;
+    if (!track) return;
+    const top = window.scrollY + track.getBoundingClientRect().top;
+    const scrollable = track.offsetHeight - window.innerHeight;
+    window.scrollTo({
+      top: top + (i / (FRAMES.length - 1)) * scrollable,
+      behavior: "smooth",
+    });
+  }
 
   if (reduceMotion) {
     return (
@@ -152,7 +187,79 @@ export function ScrollShowcase() {
     >
       <div className="sticky top-0 flex h-svh flex-col overflow-hidden bg-ink">
         <LuxuryAtmosphere progress={smoothProgress} />
+
+        {/* Kinetic backdrop word — huge outlined label gliding behind everything */}
+        <KineticWord progress={smoothProgress} />
+
+        {/* Ember specks rising through the scene */}
+        <div className="pointer-events-none absolute inset-0 z-[2]" aria-hidden="true">
+          {PARTICLES.map((particle, i) => (
+            <span
+              key={i}
+              className={cn(
+                "eh-particle absolute rounded-full",
+                particle.tint === "ember" ? "bg-ember/50" : "bg-bone/30",
+              )}
+              style={{
+                left: particle.left,
+                top: particle.top,
+                width: particle.size,
+                height: particle.size,
+                animationDuration: `${particle.duration}s`,
+                animationDelay: `${particle.delay}s`,
+              }}
+            />
+          ))}
+        </div>
+
         <div className="grain absolute inset-0 z-[1]" aria-hidden="true" />
+
+        {/* Right-side chapter rail — jump between screens */}
+        <nav
+          className="absolute right-6 top-1/2 z-20 hidden -translate-y-1/2 flex-col items-end gap-4 lg:flex xl:right-10"
+          aria-label="Showcase chapters"
+        >
+          {FRAMES.map((frame, i) => (
+            <button
+              key={frame.id}
+              onClick={() => scrollToFrame(i)}
+              className="group flex cursor-pointer items-center gap-3"
+              aria-label={`Go to ${frame.label}`}
+              aria-current={i === active ? "step" : undefined}
+            >
+              <span
+                className={cn(
+                  "font-mono text-[10px] tracking-[0.14em] uppercase transition-all duration-300",
+                  i === active
+                    ? "translate-x-0 text-bone opacity-100"
+                    : "translate-x-2 text-ash opacity-0 group-hover:translate-x-0 group-hover:opacity-100",
+                )}
+              >
+                {frame.label}
+              </span>
+              <span
+                className={cn(
+                  "h-px transition-all duration-300",
+                  i === active
+                    ? "w-8 bg-ember"
+                    : "w-4 bg-bone/25 group-hover:bg-bone/50",
+                )}
+              />
+            </button>
+          ))}
+        </nav>
+
+        {/* Scroll hint — fades as soon as the journey starts */}
+        <motion.div
+          className="pointer-events-none absolute bottom-5 left-1/2 z-20 hidden -translate-x-1/2 flex-col items-center gap-2 lg:flex"
+          style={{ opacity: hintOpacity }}
+          aria-hidden="true"
+        >
+          <span className="font-mono text-[10px] tracking-[0.2em] text-ash/80">
+            SCROLL
+          </span>
+          <span className="eh-scroll-line block h-8 w-px bg-gradient-to-b from-ember/70 to-transparent" />
+        </motion.div>
 
         <div className="relative z-10 mx-auto flex h-full w-full max-w-[1200px] flex-col px-6 pt-24 pb-6 max-sm:justify-between md:px-8 lg:flex-row lg:items-center lg:gap-16 lg:px-12 lg:pt-24 lg:pb-12">
           <div className="flex shrink-0 flex-col items-center text-center lg:flex-1 lg:items-start lg:text-left">
@@ -171,23 +278,62 @@ export function ScrollShowcase() {
                   key={frame.id}
                   className="col-start-1 row-start-1 flex flex-col items-center lg:items-start"
                   initial={false}
-                  animate={{
-                    opacity: i === active ? 1 : 0,
-                    y: i === active ? 0 : 14,
-                  }}
-                  transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                  animate={{ opacity: i === active ? 1 : 0 }}
+                  transition={{ duration: 0.4, ease: "easeOut" }}
                   aria-hidden={i !== active}
                   style={{ pointerEvents: i === active ? "auto" : "none" }}
                 >
-                  <p className="font-mono text-[11px] tracking-[0.18em] text-ember/80 uppercase">
+                  <motion.p
+                    initial={false}
+                    animate={{
+                      opacity: i === active ? 1 : 0,
+                      y: i === active ? 0 : 10,
+                    }}
+                    transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+                    className="font-mono text-[11px] tracking-[0.18em] text-ember/80 uppercase"
+                  >
                     {frame.label}
-                  </p>
+                  </motion.p>
                   <h1 className="mt-2 text-balance text-[32px] font-semibold leading-[1.05] tracking-[-0.03em] text-bone sm:mt-3 sm:text-[48px] lg:text-[clamp(48px,4.8vw,64px)]">
-                    {frame.title}
+                    {frame.title.split(" ").map((word, w) => (
+                      <span
+                        key={w}
+                        className="inline-block overflow-hidden pb-[0.08em] align-bottom"
+                      >
+                        <motion.span
+                          className="inline-block"
+                          initial={false}
+                          animate={{
+                            y: i === active ? 0 : "110%",
+                            opacity: i === active ? 1 : 0,
+                          }}
+                          transition={{
+                            duration: 0.55,
+                            delay: i === active ? 0.05 + w * 0.055 : 0,
+                            ease: [0.22, 1, 0.36, 1],
+                          }}
+                        >
+                          {word}
+                        </motion.span>
+                        {w < frame.title.split(" ").length - 1 && "\u00A0"}
+                      </span>
+                    ))}
                   </h1>
-                  <p className="mt-3 max-w-[420px] text-[15px] leading-relaxed text-bone/65 sm:mt-4 sm:text-[17px]">
+                  <motion.p
+                    initial={false}
+                    animate={{
+                      opacity: i === active ? 1 : 0,
+                      y: i === active ? 0 : 12,
+                    }}
+                    transition={{
+                      duration: 0.5,
+                      delay: i === active ? 0.18 : 0,
+                      ease: [0.22, 1, 0.36, 1],
+                    }}
+                    className="mt-3 max-w-[420px] text-[15px] leading-relaxed text-bone/65 sm:mt-4 sm:text-[17px]"
+                  >
                     {frame.copy}
-                  </p>
+                  </motion.p>
                 </motion.div>
               ))}
             </div>
@@ -213,26 +359,34 @@ export function ScrollShowcase() {
               aria-label="Showcase progress"
             >
               {FRAMES.map((frame, i) => (
-                <div
+                <button
                   key={frame.id}
-                  className={cn(
-                    "h-[3px] rounded-full transition-all duration-300 ease-out",
-                    i === active ? "w-8 bg-ember" : "w-3 bg-bone/20",
-                  )}
+                  onClick={() => scrollToFrame(i)}
+                  aria-label={`Go to ${frame.label}`}
                   aria-current={i === active ? "step" : undefined}
+                  className={cn(
+                    "h-[3px] cursor-pointer rounded-full transition-all duration-300 ease-out",
+                    i === active
+                      ? "w-8 bg-ember"
+                      : "w-3 bg-bone/20 hover:bg-bone/40",
+                  )}
                 />
               ))}
             </div>
-
-            <p className="mt-6 hidden font-mono text-[10px] tracking-[0.14em] text-ash/70 lg:block">
-              SCROLL TO EXPLORE
-            </p>
           </div>
 
-          <div className="relative flex min-h-0 flex-1 items-end justify-center max-sm:mt-4 lg:mt-0 lg:items-center lg:justify-end">
+          <div
+            className="relative flex min-h-0 flex-1 items-end justify-center max-sm:mt-4 lg:mt-0 lg:items-center lg:justify-end"
+            style={{ perspective: 1600 }}
+          >
             <motion.div
               className="w-[min(220px,58vw)] sm:w-[280px] lg:w-[340px]"
-              style={{ y: phoneY }}
+              style={{
+                y: phoneY,
+                rotateY: phoneRotateY,
+                rotateX: phoneRotateX,
+                transformStyle: "preserve-3d",
+              }}
             >
               <PhoneFrame activeIndex={active} progress={smoothProgress} />
             </motion.div>
@@ -267,6 +421,56 @@ function StaticIntro({ frame }: { frame: (typeof FRAMES)[number] }) {
         <WaitlistCta />
       </div>
     </div>
+  );
+}
+
+/* Giant outlined chapter word gliding across the backdrop — editorial luxury. */
+function KineticWord({ progress }: { progress: MotionValue<number> }) {
+  return (
+    <div
+      className="pointer-events-none absolute inset-0 z-[1] flex items-center overflow-hidden"
+      aria-hidden="true"
+    >
+      {FRAMES.map((frame, i) => (
+        <KineticWordLayer key={frame.id} frame={frame} index={i} progress={progress} />
+      ))}
+    </div>
+  );
+}
+
+function KineticWordLayer({
+  frame,
+  index,
+  progress,
+}: {
+  frame: (typeof FRAMES)[number];
+  index: number;
+  progress: MotionValue<number>;
+}) {
+  const opacity = useTransform(progress, (p) => {
+    const pos = p * (FRAMES.length - 1);
+    const dist = Math.abs(pos - index);
+    if (dist >= 1) return 0;
+    return (1 - dist) * 0.14;
+  });
+  /* Each word drifts sideways as its chapter passes — parallax slower than scroll. */
+  const x = useTransform(progress, (p) => {
+    const pos = p * (FRAMES.length - 1);
+    return (index - pos) * 220 + (index % 2 === 0 ? -40 : 40);
+  });
+
+  return (
+    <motion.span
+      className="absolute left-1/2 top-[16%] w-max -translate-x-1/2 select-none whitespace-nowrap text-[18vw] font-bold uppercase leading-none tracking-[-0.02em] lg:top-auto lg:text-[13vw]"
+      style={{
+        opacity,
+        x,
+        color: "transparent",
+        WebkitTextStroke: `1px ${frame.spark}`,
+      }}
+    >
+      {frame.label}
+    </motion.span>
   );
 }
 
@@ -486,6 +690,13 @@ function PhoneFrame({
                 ),
               )}
             </div>
+
+            {/* Light sweep across the glass on every screen change */}
+            <div
+              key={activeIndex}
+              aria-hidden="true"
+              className="eh-screen-sweep absolute inset-0 z-10"
+            />
 
             <div
               aria-hidden="true"

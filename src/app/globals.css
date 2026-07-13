@@ -271,7 +271,10 @@
   }
   .eh-orb-drift-a,
   .eh-orb-drift-b,
-  .eh-orb-drift-c {
+  .eh-orb-drift-c,
+  .eh-particle,
+  .eh-scroll-line,
+  .eh-screen-sweep {
     animation: none;
   }
 }
@@ -325,6 +328,76 @@
   }
   66% {
     transform: translate(-3%, 5%) scale(0.96);
+  }
+}
+
+/* Ember specks rising through the showcase — transform/opacity only. */
+.eh-particle {
+  opacity: 0;
+  will-change: transform, opacity;
+  animation-name: eh-particle-rise;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+@keyframes eh-particle-rise {
+  0% {
+    transform: translateY(0) translateX(0);
+    opacity: 0;
+  }
+  12% {
+    opacity: 1;
+  }
+  75% {
+    opacity: 0.6;
+  }
+  100% {
+    transform: translateY(-72vh) translateX(3vw);
+    opacity: 0;
+  }
+}
+
+/* Scroll hint line — draws downward on loop. */
+.eh-scroll-line {
+  transform-origin: top;
+  animation: eh-scroll-draw 1.8s ease-in-out infinite;
+}
+
+@keyframes eh-scroll-draw {
+  0% {
+    transform: scaleY(0);
+  }
+  55% {
+    transform: scaleY(1);
+  }
+  100% {
+    transform: scaleY(1);
+    opacity: 0;
+  }
+}
+
+/* Diagonal glare that sweeps the phone glass when the screen changes. */
+.eh-screen-sweep {
+  background: linear-gradient(
+    115deg,
+    transparent 30%,
+    rgba(242, 238, 231, 0.09) 46%,
+    rgba(242, 238, 231, 0.16) 50%,
+    rgba(242, 238, 231, 0.09) 54%,
+    transparent 70%
+  );
+  background-size: 260% 100%;
+  background-position: 120% 0;
+  animation: eh-sweep 0.9s ease-out forwards;
+  pointer-events: none;
+}
+
+@keyframes eh-sweep {
+  from {
+    background-position: 120% 0;
+  }
+  to {
+    background-position: -60% 0;
   }
 }
 
