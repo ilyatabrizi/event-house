@@ -1,0 +1,40 @@
+---
+description: One React component per file; group related pieces in a feature folder with a barrel index.
+alwaysApply: true
+---
+
+# Component file structure
+
+## Rules
+
+1. **One component per file.** Do not define multiple React components in the same `.tsx` file.
+2. **Feature folders.** When a UI feature has more than one component (or shared constants/types), put them in a folder named after the feature:
+   - `src/components/<feature>/index.tsx` (or `index.ts`) — public export
+   - `src/components/<feature>/<component-name>.tsx` — one component each
+   - Shared data/types go in sibling modules (e.g. `frames.ts`), not inside a component file that also renders UI
+3. **File naming.** Use kebab-case matching the component: `PhoneFrame` → `phone-frame.tsx`.
+4. **Barrel imports.** Consumers import from the folder (`@/components/scroll-showcase`, `@/components/page-shell`), not deep paths, unless the deep path is an intentional internal boundary.
+5. **Tiny SVG glyphs** may live as one-export-per-file under `src/components/icons/` with a barrel `index.ts`. Do not dump unrelated UI into `icons.tsx`.
+6. **Page-local helpers** (e.g. a one-off `Heading` used only in `privacy/page.tsx`) may stay in that page file if they are trivial and not reused. Promote them to `components/` as soon as a second page needs them.
+
+## Do
+
+```
+src/components/scroll-showcase/
+  index.tsx
+  phone-frame.tsx
+  screen-layer.tsx
+  frames.ts
+```
+
+## Don't
+
+```
+src/components/scroll-showcase.tsx  // 10+ components in one file
+```
+
+## When adding UI
+
+- New multi-piece UI → create a folder first, then add files.
+- Never grow a single component file by appending more components at the bottom.
+- After splitting, delete the old monolith so imports resolve to the folder.
