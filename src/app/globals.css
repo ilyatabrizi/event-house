@@ -300,10 +300,6 @@
   );
 }
 
-.eh-orb {
-  will-change: transform;
-}
-
 .eh-orb-drift-a {
   animation: eh-orb-drift 26s ease-in-out infinite;
 }
@@ -334,7 +330,6 @@
 /* Ember specks rising through the showcase — transform/opacity only. */
 .eh-particle {
   opacity: 0;
-  will-change: transform, opacity;
   animation-name: eh-particle-rise;
   animation-timing-function: linear;
   animation-iteration-count: infinite;
@@ -376,7 +371,8 @@
   }
 }
 
-/* Diagonal glare that sweeps the phone glass when the screen changes. */
+/* Diagonal glare that sweeps the phone glass when the screen changes.
+ * Animates transform only — stays on the compositor. */
 .eh-screen-sweep {
   background: linear-gradient(
     115deg,
@@ -386,18 +382,17 @@
     rgba(242, 238, 231, 0.09) 54%,
     transparent 70%
   );
-  background-size: 260% 100%;
-  background-position: 120% 0;
+  transform: translateX(120%);
   animation: eh-sweep 0.9s ease-out forwards;
   pointer-events: none;
 }
 
 @keyframes eh-sweep {
   from {
-    background-position: 120% 0;
+    transform: translateX(120%);
   }
   to {
-    background-position: -60% 0;
+    transform: translateX(-120%);
   }
 }
 

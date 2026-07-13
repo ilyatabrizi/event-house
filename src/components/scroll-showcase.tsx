@@ -453,6 +453,9 @@ function KineticWordLayer({
     if (dist >= 1) return 0;
     return (1 - dist) * 0.14;
   });
+  const visibility = useTransform(progress, (p) =>
+    Math.abs(p * (FRAMES.length - 1) - index) >= 1 ? "hidden" : "visible",
+  );
   /* Each word drifts sideways as its chapter passes — parallax slower than scroll. */
   const x = useTransform(progress, (p) => {
     const pos = p * (FRAMES.length - 1);
@@ -464,6 +467,7 @@ function KineticWordLayer({
       className="absolute left-1/2 top-[16%] w-max -translate-x-1/2 select-none whitespace-nowrap text-[18vw] font-bold uppercase leading-none tracking-[-0.02em] lg:top-auto lg:text-[13vw]"
       style={{
         opacity,
+        visibility,
         x,
         color: "transparent",
         WebkitTextStroke: `1px ${frame.spark}`,
@@ -534,14 +538,20 @@ function AtmosphereLayer({
     if (dist >= 1) return 0;
     return 1 - dist;
   });
+  /* Fully hide off-screen layers so their paint + drift animations stop. */
+  const visibility = useTransform(progress, (p) =>
+    Math.abs(p * (FRAMES.length - 1) - index) >= 1 ? "hidden" : "visible",
+  );
 
   return (
-    <motion.div className="absolute inset-0" style={{ opacity }}>
+    <motion.div className="absolute inset-0" style={{ opacity, visibility }}>
       <AtmosphereOrbs frame={frame} animate />
     </motion.div>
   );
 }
 
+/* Softness is baked into the gradient falloff — no blur() filters, which were
+ * the main source of scroll lag (18 huge blurred layers repainting). */
 function AtmosphereOrbs({
   frame,
   animate,
@@ -571,8 +581,7 @@ function AtmosphereOrbs({
         style={{
           top: "8%",
           right: "-8%",
-          background: `radial-gradient(circle, ${frame.glow}55 0%, ${frame.glow}18 35%, transparent 68%)`,
-          filter: "blur(40px)",
+          background: `radial-gradient(circle, ${frame.glow}40 0%, ${frame.glow}1e 30%, ${frame.glow}0a 50%, transparent 72%)`,
         }}
       />
       {/* Secondary wash — upper left */}
@@ -584,8 +593,7 @@ function AtmosphereOrbs({
         style={{
           top: "-12%",
           left: "-10%",
-          background: `radial-gradient(circle, ${frame.spark}40 0%, ${frame.wash}30 40%, transparent 70%)`,
-          filter: "blur(50px)",
+          background: `radial-gradient(circle, ${frame.spark}30 0%, ${frame.wash}26 35%, ${frame.wash}10 55%, transparent 75%)`,
         }}
       />
       {/* Soft spark near center */}
@@ -597,26 +605,7 @@ function AtmosphereOrbs({
         style={{
           top: "35%",
           left: "35%",
-          background: `radial-gradient(circle, ${frame.spark}22 0%, transparent 65%)`,
-          filter: "blur(60px)",
-        }}
-      />
-      {/* Thin iridescent rim light */}
-      <div
-        className="absolute inset-0 opacity-40 mix-blend-screen"
-        style={{
-          background: `
-            conic-gradient(
-              from 210deg at 65% 45%,
-              transparent 0deg,
-              ${frame.spark}14 40deg,
-              transparent 90deg,
-              ${frame.glow}10 160deg,
-              transparent 220deg,
-              ${frame.spark}08 300deg,
-              transparent 360deg
-            )
-          `,
+          background: `radial-gradient(circle, ${frame.spark}18 0%, ${frame.spark}0a 40%, transparent 68%)`,
         }}
       />
     </>
@@ -634,20 +623,18 @@ function PhoneFrame({
 
   return (
     <div className="relative">
+      {/* Accent halo — pure gradient, no blur filter (cheap under 3D rotation) */}
       <div
         aria-hidden="true"
-        className="absolute -inset-8 rounded-[60px] transition-[box-shadow] duration-700 ease-out"
+        className="absolute -inset-12 rounded-[72px]"
         style={{
-          background: `radial-gradient(circle at 50% 40%, ${accent}33 0%, transparent 70%)`,
-          filter: "blur(24px)",
+          background: `radial-gradient(circle at 50% 42%, ${accent}26 0%, ${accent}10 40%, transparent 70%)`,
         }}
       />
+      {/* Static black drop shadow — never animated, so it rasterizes once */}
       <div
         aria-hidden="true"
-        className="absolute inset-0 rounded-[52px] transition-[box-shadow] duration-700 ease-out"
-        style={{
-          boxShadow: `0 50px 100px ${accent}22, 0 30px 60px rgba(0,0,0,0.55)`,
-        }}
+        className="absolute inset-0 rounded-[52px] shadow-[0_40px_80px_rgba(0,0,0,0.5)]"
       />
       <div className="relative aspect-[380/780] w-full rounded-[52px] bg-[linear-gradient(155deg,#4a4a4e,#1a1a1e)] p-[3px] shadow-[inset_0_0_0_1px_rgba(242,238,231,0.06)]">
         <div className={`absolute -left-[2px] top-[17%] h-[3.5%] rounded-l-[2px] ${hardware}`} />
@@ -724,11 +711,14 @@ function ScreenLayer({
     if (dist >= 1) return 0;
     return 1 - dist;
   });
+  const visibility = useTransform(progress, (p) =>
+    Math.abs(p * (FRAMES.length - 1) - index) >= 1 ? "hidden" : "visible",
+  );
 
   return (
     <motion.div
       className="absolute inset-0 flex flex-col items-center justify-center"
-      style={{ backgroundColor: frame.color, opacity }}
+      style={{ backgroundColor: frame.color, opacity, visibility }}
     >
       <ScreenContent frame={frame} />
     </motion.div>
