@@ -1,22 +1,11 @@
 "use client";
 
 import { motion } from "framer-motion";
-import Link from "next/link";
-import { AppleGlyph } from "@/components/icons";
 import { FRAMES } from "@/components/scroll-showcase/frames";
-import { buttonVariants } from "@/components/ui/button";
-import { WaitlistCta } from "@/components/waitlist-cta";
-import { cn } from "@/lib/utils";
 
-export function ShowcaseCopy({
-  active,
-  onSelectFrame,
-}: {
-  active: number;
-  onSelectFrame: (index: number) => void;
-}) {
+export function ShowcaseCopy({ active }: { active: number }) {
   return (
-    <div className="flex shrink-0 flex-col items-center text-center lg:flex-1 lg:items-start lg:text-left">
+    <div className="flex shrink-0 flex-col items-center text-center lg:items-start lg:text-left">
       <p className="font-mono text-[11px] tracking-[0.16em] text-ash">
         EVENT HOUSE
         <span className="mx-2 text-ash/40">·</span>
@@ -26,7 +15,7 @@ export function ShowcaseCopy({
         </span>
       </p>
 
-      <div className="relative mt-4 grid w-full max-w-xl sm:mt-6">
+      <div className="relative mt-3 grid w-full max-w-xl sm:mt-6">
         {FRAMES.map((frame, i) => (
           <motion.div
             key={frame.id}
@@ -48,7 +37,7 @@ export function ShowcaseCopy({
             >
               {frame.label}
             </motion.p>
-            <h1 className="mt-2 text-balance text-[32px] font-semibold leading-[1.05] tracking-[-0.03em] text-bone sm:mt-3 sm:text-[48px] lg:text-[clamp(48px,4.8vw,64px)]">
+            <h1 className="mt-2 text-balance text-[28px] font-semibold leading-[1.05] tracking-[-0.03em] text-bone sm:mt-3 sm:text-[48px] lg:text-[clamp(48px,4.8vw,64px)]">
               {frame.title.split(" ").map((word, w) => (
                 <span
                   key={w}
@@ -84,45 +73,11 @@ export function ShowcaseCopy({
                 delay: i === active ? 0.18 : 0,
                 ease: [0.22, 1, 0.36, 1],
               }}
-              className="mt-3 max-w-[420px] text-[15px] leading-relaxed text-bone/65 sm:mt-4 sm:text-[17px]"
+              className="mt-2 max-w-[420px] text-[14px] leading-relaxed text-bone/65 sm:mt-4 sm:text-[17px]"
             >
               {frame.copy}
             </motion.p>
           </motion.div>
-        ))}
-      </div>
-
-      <div className="relative z-10 mt-5 flex flex-wrap items-center justify-center gap-3 sm:mt-8 lg:justify-start">
-        <Link
-          id="eh-cta-ios"
-          href="/download"
-          className={cn(
-            buttonVariants(),
-            "h-11 cursor-pointer gap-2 rounded-full border-transparent bg-bone px-5 text-sm font-medium text-ink transition-colors duration-200 ease-out hover:bg-bone focus-visible:border-transparent focus-visible:ring-0",
-          )}
-        >
-          <AppleGlyph className="size-4" />
-          Download for iOS
-        </Link>
-        <WaitlistCta />
-      </div>
-
-      <div
-        className="mt-6 flex items-center gap-2 sm:mt-10"
-        role="group"
-        aria-label="Showcase progress"
-      >
-        {FRAMES.map((frame, i) => (
-          <button
-            key={frame.id}
-            onClick={() => onSelectFrame(i)}
-            aria-label={`Go to ${frame.label}`}
-            aria-current={i === active ? "step" : undefined}
-            className={cn(
-              "h-[3px] cursor-pointer rounded-full transition-all duration-300 ease-out",
-              i === active ? "w-8 bg-ember" : "w-3 bg-bone/20 hover:bg-bone/40",
-            )}
-          />
         ))}
       </div>
     </div>

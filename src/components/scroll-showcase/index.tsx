@@ -18,6 +18,7 @@ import { ParticleField } from "@/components/scroll-showcase/particle-field";
 import { PhoneFrame } from "@/components/scroll-showcase/phone-frame";
 import { ScrollHint } from "@/components/scroll-showcase/scroll-hint";
 import { ShowcaseCopy } from "@/components/scroll-showcase/showcase-copy";
+import { ShowcaseCtas } from "@/components/scroll-showcase/showcase-ctas";
 import { StaticIntro } from "@/components/scroll-showcase/static-intro";
 
 export function ScrollShowcase() {
@@ -69,9 +70,9 @@ export function ScrollShowcase() {
     return (
       <section className="relative overflow-hidden bg-ink">
         <AtmosphereStatic frame={FRAMES[0]} />
-        <div className="relative z-10 mx-auto flex max-w-[1200px] flex-col items-center gap-16 px-6 pb-24 pt-36 md:px-8 lg:px-12">
+        <div className="relative z-10 mx-auto flex max-w-[1200px] flex-col items-center gap-10 px-6 pb-24 pt-36 md:px-8 lg:px-12">
           <StaticIntro frame={FRAMES[0]} />
-          <div className="w-[min(280px,72vw)] sm:w-[300px]">
+          <div className="w-[min(200px,52vw)] sm:w-[280px] lg:w-[300px]">
             <PhoneFrame activeIndex={0} />
           </div>
           <ul className="grid w-full max-w-md gap-3">
@@ -108,15 +109,21 @@ export function ScrollShowcase() {
         <ChapterRail active={active} onSelect={scrollToFrame} />
         <ScrollHint opacity={hintOpacity} />
 
-        <div className="relative z-10 mx-auto flex h-full w-full max-w-[1200px] flex-col px-6 pt-24 pb-6 max-sm:justify-between md:px-8 lg:flex-row lg:items-center lg:gap-16 lg:px-12 lg:pt-24 lg:pb-12">
-          <ShowcaseCopy active={active} onSelectFrame={scrollToFrame} />
+        <div className="relative z-10 mx-auto flex h-full w-full max-w-[1200px] flex-col justify-between px-6 pt-20 pb-5 md:px-8 lg:flex-row lg:items-center lg:justify-start lg:gap-16 lg:px-12 lg:pt-24 lg:pb-12">
+          {/* `contents` on mobile lets copy / phone / CTAs share one flex order */}
+          <div className="contents lg:flex lg:min-w-0 lg:flex-1 lg:flex-col lg:items-start">
+            <div className="order-1 shrink-0">
+              <ShowcaseCopy active={active} />
+            </div>
+            <ShowcaseCtas className="order-3 shrink-0 lg:order-2 lg:mt-8 lg:justify-start" />
+          </div>
 
           <div
-            className="relative flex min-h-0 flex-1 items-end justify-center max-sm:mt-4 lg:mt-0 lg:items-center lg:justify-end"
+            className="relative order-2 flex shrink-0 items-center justify-center lg:order-0 lg:min-h-0 lg:flex-1 lg:justify-end"
             style={{ perspective: 1600 }}
           >
             <motion.div
-              className="w-[min(220px,58vw)] sm:w-[280px] lg:w-[340px]"
+              className="w-[min(156px,42vw)] sm:w-[260px] lg:w-[340px]"
               style={{
                 y: phoneY,
                 rotateY: phoneRotateY,

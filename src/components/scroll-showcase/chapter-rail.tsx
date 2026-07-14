@@ -12,8 +12,9 @@ export function ChapterRail({
 }) {
   return (
     <nav
-      className="absolute right-6 top-1/2 z-20 hidden -translate-y-1/2 flex-col items-end gap-4 lg:flex xl:right-10"
-      aria-label="Showcase chapters"
+      className="absolute right-4 top-1/2 z-20 flex -translate-y-1/2 flex-col items-end gap-2 sm:right-6 sm:gap-2.5 xl:right-10"
+      aria-label="Showcase progress"
+      role="group"
     >
       {FRAMES.map((frame, i) => (
         <button
@@ -25,7 +26,7 @@ export function ChapterRail({
         >
           <span
             className={cn(
-              "font-mono text-[10px] tracking-[0.14em] uppercase transition-all duration-300",
+              "hidden font-mono text-[10px] tracking-[0.14em] uppercase transition-all duration-300 lg:inline",
               i === active
                 ? "translate-x-0 text-bone opacity-100"
                 : "translate-x-2 text-ash opacity-0 group-hover:translate-x-0 group-hover:opacity-100",
@@ -35,10 +36,10 @@ export function ChapterRail({
           </span>
           <span
             className={cn(
-              "h-px transition-all duration-300",
+              "h-[3px] rounded-full transition-all duration-300 ease-out",
               i === active
                 ? "w-8 bg-ember"
-                : "w-4 bg-bone/25 group-hover:bg-bone/50",
+                : "w-3 bg-bone/20 group-hover:bg-bone/40",
             )}
           />
         </button>
