@@ -86,7 +86,7 @@ export function DesktopShowcase() {
             style={{ perspective: 1600 }}
           >
             <motion.div
-              className="w-[min(420px,38vw)]"
+              className="w-[340px]"
               style={{
                 y: phoneY,
                 rotateY: phoneRotateY,
