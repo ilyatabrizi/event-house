@@ -28,7 +28,7 @@ export function ScreenLayer({
 
   return (
     <motion.div
-      className="absolute inset-0 flex flex-col items-center justify-center"
+      className="absolute inset-0"
       style={{ backgroundColor: frame.color, opacity, visibility }}
     >
       <ScreenContent frame={frame} />

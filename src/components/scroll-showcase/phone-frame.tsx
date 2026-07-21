@@ -1,7 +1,6 @@
 "use client";
 
 import type { MotionValue } from "framer-motion";
-import { BatteryGlyph, SignalGlyph, WifiGlyph } from "@/components/icons";
 import {
   FRAMES,
   PHONE_HARDWARE,
@@ -51,21 +50,6 @@ export function PhoneFrame({
 
         <div className="h-full w-full rounded-[26px] bg-[#050508] p-[4px] sm:rounded-[37px] sm:p-[5px] lg:rounded-[49px] lg:p-[6px]">
           <div className="relative h-full w-full overflow-hidden rounded-[22px] bg-ink sm:rounded-[32px] lg:rounded-[42px]">
-            <div className="absolute inset-x-0 top-0 z-20 flex h-7 items-center justify-between px-4 sm:h-9 sm:px-5 lg:h-11 lg:px-7">
-              <span className="text-[10px] font-semibold text-bone sm:text-[12px] lg:text-[15px]">
-                9:41
-              </span>
-              <span className="flex items-center gap-1 text-bone sm:gap-1.5">
-                <SignalGlyph className="h-[7px] w-auto sm:h-[9px] lg:h-[10px]" />
-                <WifiGlyph className="h-[7px] w-auto sm:h-[9px] lg:h-[10px]" />
-                <BatteryGlyph className="h-[8px] w-auto sm:h-[10px] lg:h-[11px]" />
-              </span>
-            </div>
-            <div
-              aria-hidden="true"
-              className="absolute left-1/2 top-2 z-20 h-[18px] w-[62px] -translate-x-1/2 rounded-full bg-[#050508] sm:top-2.5 sm:h-[24px] sm:w-[84px] lg:top-3 lg:h-[32px] lg:w-[112px]"
-            />
-
             <div className="absolute inset-0">
               {FRAMES.map((frame, i) =>
                 progress ? (
@@ -79,7 +63,7 @@ export function PhoneFrame({
                   <div
                     key={frame.id}
                     className={cn(
-                      "absolute inset-0 flex flex-col items-center justify-center transition-opacity duration-500",
+                      "absolute inset-0 transition-opacity duration-500",
                       i === activeIndex ? "opacity-100" : "opacity-0",
                     )}
                     style={{ backgroundColor: frame.color }}
@@ -95,11 +79,6 @@ export function PhoneFrame({
               key={activeIndex}
               aria-hidden="true"
               className="eh-screen-sweep absolute inset-0 z-10"
-            />
-
-            <div
-              aria-hidden="true"
-              className="absolute bottom-1.5 left-1/2 z-20 h-[3px] w-[72px] -translate-x-1/2 rounded-full bg-bone/90 sm:bottom-2 sm:h-[4px] sm:w-[100px] lg:h-[5px] lg:w-[130px]"
             />
           </div>
         </div>
