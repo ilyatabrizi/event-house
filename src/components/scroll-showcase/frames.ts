@@ -1,5 +1,6 @@
 /* App screenshots for the scroll story (Nodestar-style pinned sequence).
- * `glow` / `wash` / `spark` drive the luxury atmosphere that morphs with the screen. */
+ * `glow` / `wash` / `spark` drive the luxury atmosphere that morphs with the screen.
+ * `mobileTitle` / `mobileCopy` are shorter beats for the horizontal phone carousel. */
 
 export const FRAMES = [
   {
@@ -7,6 +8,8 @@ export const FRAMES = [
     label: "Home",
     title: "The city has plans tonight.",
     copy: "A feed that knows Dubai — recommended nights, who's going, and what it costs.",
+    mobileTitle: "Tonight, near you.",
+    mobileCopy: "Recommended nights, who's going, and what it costs.",
     image: "/covercase/01-home.png",
     color: "#0A0A0A",
     accent: "#FF5B3D",
@@ -19,6 +22,8 @@ export const FRAMES = [
     label: "Discover",
     title: "Find your night.",
     copy: "Search events, hosts, and places — or browse by the mood you're after.",
+    mobileTitle: "Find your night.",
+    mobileCopy: "Browse by mood, host, or place.",
     image: "/covercase/02-discover.png",
     color: "#0A0A0A",
     accent: "#FF5B3D",
@@ -31,6 +36,8 @@ export const FRAMES = [
     label: "Profile",
     title: "Your night out, filed.",
     copy: "Posts, events, and the people who follow where you go.",
+    mobileTitle: "Your nights, filed.",
+    mobileCopy: "Posts, events, and who follows along.",
     image: "/covercase/03-profile.png",
     color: "#0C1210",
     accent: "#FF5B3D",
@@ -43,6 +50,8 @@ export const FRAMES = [
     label: "Chat",
     title: "Plan it in private.",
     copy: "Messages stay between you and them — pre-game invites included.",
+    mobileTitle: "Plan it in private.",
+    mobileCopy: "Pre-game invites, just between you.",
     image: "/covercase/04-chats.png",
     color: "#0A0A0A",
     accent: "#FF5B3D",
@@ -55,6 +64,8 @@ export const FRAMES = [
     label: "Premium",
     title: "For people who go out often.",
     copy: "A verified badge, members-only nights, and a concierge in every city.",
+    mobileTitle: "For people who go out.",
+    mobileCopy: "Verified badge, members-only nights.",
     image: "/covercase/05-premium.png",
     color: "#10100E",
     accent: "#C9A46A",
@@ -67,6 +78,8 @@ export const FRAMES = [
     label: "Tickets",
     title: "Scan at the door.",
     copy: "Every upcoming night in one place — QR ready when you arrive.",
+    mobileTitle: "Scan at the door.",
+    mobileCopy: "Every ticket, QR ready when you arrive.",
     image: "/covercase/06-tickets.png",
     color: "#0A0A0A",
     accent: "#FF5B3D",
