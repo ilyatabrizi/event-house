@@ -35,8 +35,10 @@ export function MobileShowcase() {
     if (!el) return;
 
     function onScroll() {
-      const max = el.scrollWidth - el.clientWidth;
-      rawProgress.set(max > 0 ? el.scrollLeft / max : 0);
+      const node = scrollerRef.current;
+      if (!node) return;
+      const max = node.scrollWidth - node.clientWidth;
+      rawProgress.set(max > 0 ? node.scrollLeft / max : 0);
     }
 
     onScroll();
