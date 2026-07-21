@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import { MenuGlyph } from "@/components/icons";
+import { LogoMark, MenuGlyph } from "@/components/icons";
 
 type NavItem = { label: string; href: string };
 
@@ -75,7 +75,7 @@ export function SiteNav({ variant = "overlay" }: { variant?: "overlay" | "solid"
           aria-label="Event House home"
           className="flex items-center gap-[10px]"
         >
-          <div id="eh-logomark" className="h-4 w-4 rounded-[4px] bg-bone" />
+          <LogoMark id="eh-logomark" className="h-5 w-5 text-bone" />
           <span className="text-[15px] font-semibold tracking-[-0.01em] text-bone">
             Event House
           </span>
