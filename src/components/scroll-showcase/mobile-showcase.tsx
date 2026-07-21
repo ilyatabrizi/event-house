@@ -5,7 +5,6 @@ import {
   useMotionValue,
   useMotionValueEvent,
   useSpring,
-  useTransform,
 } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import { ChapterRail } from "@/components/scroll-showcase/chapter-rail";
@@ -28,8 +27,7 @@ export function MobileShowcase() {
     mass: 0.35,
   });
 
-  const hintOpacity = useTransform(smoothProgress, [0, 0.08], [1, 0]);
-
+  const isLast = active >= FRAMES.length - 1;
   useEffect(() => {
     const el = scrollerRef.current;
     if (!el) return;
@@ -104,7 +102,12 @@ export function MobileShowcase() {
         />
       </div>
 
-      <ScrollHint opacity={hintOpacity} direction="horizontal" />
+      <ScrollHint opacity={isLast ? 0 : 1} direction="horizontal" />
+      <ScrollHint
+        opacity={isLast ? 1 : 0}
+        direction="vertical"
+        className="bottom-14"
+      />
     </section>
   );
 }

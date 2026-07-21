@@ -41,7 +41,11 @@ export function DesktopShowcase() {
     smoothProgress,
     (p) => 4 + Math.sin(p * Math.PI * 1.6) * 3,
   );
-  const hintOpacity = useTransform(smoothProgress, [0, 0.06], [1, 0]);
+  const hintOpacity = useTransform(smoothProgress, (p) => {
+    /* Keep SCROLL visible through each chapter; ease out only on the last beat. */
+    if (p < 0.88) return 1;
+    return Math.max(0, 1 - (p - 0.88) / 0.12);
+  });
 
   useMotionValueEvent(smoothProgress, "change", (p) => {
     const next = Math.round(
