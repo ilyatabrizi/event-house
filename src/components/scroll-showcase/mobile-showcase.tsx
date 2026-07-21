@@ -16,7 +16,6 @@ import { ParticleField } from "@/components/scroll-showcase/particle-field";
 import { PhoneFrame } from "@/components/scroll-showcase/phone-frame";
 import { ScrollHint } from "@/components/scroll-showcase/scroll-hint";
 import { ShowcaseCopy } from "@/components/scroll-showcase/showcase-copy";
-import { ShowcaseCtas } from "@/components/scroll-showcase/showcase-ctas";
 
 export function MobileShowcase() {
   const scrollerRef = useRef<HTMLDivElement>(null);
@@ -60,7 +59,7 @@ export function MobileShowcase() {
 
   return (
     <section
-      className="relative h-svh overflow-hidden bg-ink"
+      className="relative flex h-svh flex-col overflow-hidden bg-ink"
       aria-label="Product showcase"
     >
       <LuxuryAtmosphere progress={smoothProgress} />
@@ -70,17 +69,17 @@ export function MobileShowcase() {
 
       <div
         ref={scrollerRef}
-        className="relative z-10 flex h-full snap-x snap-mandatory overflow-x-auto overscroll-x-contain [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+        className="relative z-10 flex min-h-0 flex-1 snap-x snap-mandatory overflow-x-auto overscroll-x-contain [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
       >
         {FRAMES.map((frame, i) => (
           <div
             key={frame.id}
-            className="flex h-full w-full shrink-0 snap-center flex-col justify-between px-6 pt-20 pb-24 sm:px-8"
+            className="flex h-full w-full shrink-0 snap-center flex-col px-5 pt-16 sm:px-8 sm:pt-20"
           >
-            <ShowcaseCopy active={i} />
-            <div className="flex flex-1 items-center justify-center py-4">
+            <ShowcaseCopy active={i} compact />
+            <div className="flex min-h-0 flex-1 items-end justify-center pb-1 sm:items-center sm:pb-0">
               <motion.div
-                className="w-[min(168px,44vw)] sm:w-[220px]"
+                className="w-[min(220px,58vw)] sm:w-[280px]"
                 initial={false}
                 animate={{
                   opacity: i === active ? 1 : 0.45,
@@ -95,12 +94,14 @@ export function MobileShowcase() {
         ))}
       </div>
 
-      <ShowcaseCtas className="absolute inset-x-0 bottom-14 z-20 px-6 sm:bottom-16" />
-      <ChapterRail
-        active={active}
-        onSelect={scrollToFrame}
-        orientation="horizontal"
-      />
+      <div className="relative z-20 flex shrink-0 justify-center px-6 pb-[max(1.25rem,env(safe-area-inset-bottom))] pt-2">
+        <ChapterRail
+          active={active}
+          onSelect={scrollToFrame}
+          orientation="horizontal"
+        />
+      </div>
+
       <ScrollHint opacity={hintOpacity} direction="horizontal" />
     </section>
   );

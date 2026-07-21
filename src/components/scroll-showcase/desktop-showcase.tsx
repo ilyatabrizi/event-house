@@ -16,7 +16,6 @@ import { ParticleField } from "@/components/scroll-showcase/particle-field";
 import { PhoneFrame } from "@/components/scroll-showcase/phone-frame";
 import { ScrollHint } from "@/components/scroll-showcase/scroll-hint";
 import { ShowcaseCopy } from "@/components/scroll-showcase/showcase-copy";
-import { ShowcaseCtas } from "@/components/scroll-showcase/showcase-ctas";
 
 export function DesktopShowcase() {
   const trackRef = useRef<HTMLDivElement>(null);
@@ -80,7 +79,6 @@ export function DesktopShowcase() {
         <div className="relative z-10 mx-auto flex h-full w-full max-w-[1200px] flex-row items-center justify-start gap-16 px-12 pt-24 pb-12">
           <div className="flex min-w-0 flex-1 flex-col items-start">
             <ShowcaseCopy active={active} />
-            <ShowcaseCtas className="mt-8 justify-start" />
           </div>
 
           <div
@@ -88,7 +86,7 @@ export function DesktopShowcase() {
             style={{ perspective: 1600 }}
           >
             <motion.div
-              className="w-[340px]"
+              className="w-[min(420px,38vw)]"
               style={{
                 y: phoneY,
                 rotateY: phoneRotateY,

@@ -17,10 +17,10 @@ export function ChapterRail({
   return (
     <nav
       className={cn(
-        "absolute z-20",
+        "z-20",
         horizontal
-          ? "bottom-5 left-1/2 flex -translate-x-1/2 flex-row items-center gap-2"
-          : "right-4 top-1/2 flex -translate-y-1/2 flex-col items-end gap-2 sm:right-6 sm:gap-2.5 xl:right-10",
+          ? "relative flex flex-row items-center justify-center gap-2"
+          : "absolute right-4 top-1/2 flex -translate-y-1/2 flex-col items-end gap-2 sm:right-6 sm:gap-2.5 xl:right-10",
       )}
       aria-label="Showcase progress"
       role="group"
