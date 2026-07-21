@@ -2,17 +2,35 @@
 
 import { motion, type MotionValue } from "framer-motion";
 
-export function ScrollHint({ opacity }: { opacity: MotionValue<number> }) {
+export function ScrollHint({
+  opacity,
+  direction = "vertical",
+}: {
+  opacity: MotionValue<number>;
+  direction?: "vertical" | "horizontal";
+}) {
+  const horizontal = direction === "horizontal";
+
   return (
     <motion.div
-      className="pointer-events-none absolute bottom-5 left-1/2 z-20 hidden -translate-x-1/2 flex-col items-center gap-2 lg:flex"
+      className={
+        horizontal
+          ? "pointer-events-none absolute top-[42%] right-5 z-20 flex items-center gap-2"
+          : "pointer-events-none absolute bottom-5 left-1/2 z-20 flex -translate-x-1/2 flex-col items-center gap-2"
+      }
       style={{ opacity }}
       aria-hidden="true"
     >
       <span className="font-mono text-[10px] tracking-[0.2em] text-ash/80">
-        SCROLL
+        {horizontal ? "SWIPE" : "SCROLL"}
       </span>
-      <span className="eh-scroll-line block h-8 w-px bg-gradient-to-b from-ember/70 to-transparent" />
+      <span
+        className={
+          horizontal
+            ? "eh-scroll-line block h-px w-8 bg-gradient-to-r from-ember/70 to-transparent"
+            : "eh-scroll-line block h-8 w-px bg-gradient-to-b from-ember/70 to-transparent"
+        }
+      />
     </motion.div>
   );
 }
