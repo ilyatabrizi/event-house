@@ -4,14 +4,11 @@ import { useReducedMotion } from "framer-motion";
 import { AtmosphereStatic } from "@/components/scroll-showcase/atmosphere-static";
 import { DesktopShowcase } from "@/components/scroll-showcase/desktop-showcase";
 import { FRAMES } from "@/components/scroll-showcase/frames";
-import { MobileShowcase } from "@/components/scroll-showcase/mobile-showcase";
 import { PhoneFrame } from "@/components/scroll-showcase/phone-frame";
 import { StaticIntro } from "@/components/scroll-showcase/static-intro";
-import { useLgUp } from "@/components/scroll-showcase/use-lg-up";
 
 export function ScrollShowcase() {
   const reduceMotion = useReducedMotion();
-  const lgUp = useLgUp();
 
   if (reduceMotion) {
     return (
@@ -41,5 +38,5 @@ export function ScrollShowcase() {
     );
   }
 
-  return lgUp ? <DesktopShowcase /> : <MobileShowcase />;
+  return <DesktopShowcase />;
 }

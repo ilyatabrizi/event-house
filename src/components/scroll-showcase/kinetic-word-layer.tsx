@@ -31,7 +31,7 @@ export function KineticWordLayer({
 
   return (
     <motion.span
-      className="absolute left-1/2 top-[16%] w-max -translate-x-1/2 select-none whitespace-nowrap text-[18vw] font-bold uppercase leading-none tracking-[-0.02em] lg:top-auto lg:text-[13vw]"
+      className="absolute left-1/2 top-[18%] w-max -translate-x-1/2 select-none whitespace-nowrap text-[clamp(48px,13vw,13vw)] font-bold uppercase leading-none tracking-[-0.02em] lg:top-auto"
       style={{
         opacity,
         visibility,

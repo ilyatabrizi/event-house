@@ -32,17 +32,16 @@ export function DesktopShowcase() {
     mass: 0.4,
   });
 
-  const phoneY = useTransform(smoothProgress, [0, 1], [28, -28]);
+  const phoneY = useTransform(smoothProgress, [0, 1], [20, -20]);
   const phoneRotateY = useTransform(
     smoothProgress,
-    (p) => -12 + Math.sin(p * Math.PI * 2.4) * 8,
+    (p) => -10 + Math.sin(p * Math.PI * 2.4) * 6,
   );
   const phoneRotateX = useTransform(
     smoothProgress,
-    (p) => 4 + Math.sin(p * Math.PI * 1.6) * 3,
+    (p) => 3 + Math.sin(p * Math.PI * 1.6) * 2,
   );
   const hintOpacity = useTransform(smoothProgress, (p) => {
-    /* Keep SCROLL visible through each chapter; ease out only on the last beat. */
     if (p < 0.88) return 1;
     return Math.max(0, 1 - (p - 0.88) / 0.12);
   });
@@ -80,17 +79,18 @@ export function DesktopShowcase() {
         <ChapterRail active={active} onSelect={scrollToFrame} />
         <ScrollHint opacity={hintOpacity} />
 
-        <div className="relative z-10 mx-auto flex h-full w-full max-w-[1200px] flex-row items-center justify-start gap-16 px-12 pt-24 pb-12">
-          <div className="flex min-w-0 flex-1 flex-col items-start">
+        {/* < sm: stacked (copy above phone). sm+: side-by-side desktop composition. */}
+        <div className="relative z-10 mx-auto flex h-full w-full max-w-[1200px] flex-col justify-between px-6 pt-20 pb-5 sm:flex-row sm:items-center sm:justify-start sm:gap-10 sm:px-8 sm:pr-14 sm:pt-24 sm:pb-10 md:gap-12 lg:gap-16 lg:px-12 lg:pr-16 lg:pb-12">
+          <div className="order-1 shrink-0 sm:order-0 sm:flex sm:min-w-0 sm:flex-1 sm:flex-col sm:items-start">
             <ShowcaseCopy active={active} />
           </div>
 
           <div
-            className="relative flex min-h-0 flex-1 items-center justify-end"
+            className="relative order-2 flex min-h-0 flex-1 items-center justify-center sm:flex-none sm:justify-end"
             style={{ perspective: 1600 }}
           >
             <motion.div
-              className="w-[340px]"
+              className="w-[min(200px,52vw)] sm:w-[240px] md:w-[280px] lg:w-[340px]"
               style={{
                 y: phoneY,
                 rotateY: phoneRotateY,
