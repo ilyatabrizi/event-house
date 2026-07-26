@@ -1,5 +1,6 @@
 "use client";
 
+import type { ReactNode } from "react";
 import { useEffect, useRef, useState } from "react";
 import { AndroidGlyph } from "@/components/icons";
 import { Button, buttonVariants } from "@/components/ui/button";
@@ -7,11 +8,25 @@ import { cn } from "@/lib/utils";
 
 type Phase = "idle" | "editing" | "sending" | "done";
 
+type WaitlistCtaProps = {
+  label?: string;
+  icon?: ReactNode;
+  ariaLabel?: string;
+  id?: string;
+  variant?: "secondary" | "primary";
+};
+
 /* Secondary CTA (§7.4) with one documented extension: clicking it morphs the
  * pill inline (same 44px geometry — no popup, no modal) into an email field
  * that POSTs to /api/waitlist. A persistent visually-hidden status region
  * announces success/error to screen readers. */
-export function WaitlistCta() {
+export function WaitlistCta({
+  label = "Join Android waitlist",
+  icon = <AndroidGlyph className="size-4 text-ash" />,
+  ariaLabel = "Email address for the waitlist",
+  id = "eh-cta-android",
+  variant = "secondary",
+}: WaitlistCtaProps = {}) {
   const [phase, setPhase] = useState<Phase>("idle");
   const [email, setEmail] = useState("");
   const [error, setError] = useState<string | null>(null);
@@ -74,7 +89,7 @@ export function WaitlistCta() {
                 if (event.key === "Escape") setPhase("idle");
               }}
               placeholder="you@example.com"
-              aria-label="Email address for the Android waitlist"
+              aria-label={ariaLabel}
               className="w-[164px] bg-transparent text-sm text-bone placeholder:text-ash"
             />
             <Button
@@ -88,7 +103,7 @@ export function WaitlistCta() {
         </form>
       ) : (
         <a
-          id="eh-cta-android"
+          id={id}
           href="#"
           onClick={(event) => {
             event.preventDefault();
@@ -96,11 +111,14 @@ export function WaitlistCta() {
           }}
           className={cn(
             buttonVariants(),
-            "h-11 gap-2 rounded-full border-ash bg-transparent px-5 text-sm font-medium text-bone transition-colors duration-200 ease-out hover:border-bone/60 hover:bg-transparent focus-visible:border-ash focus-visible:ring-0",
+            "h-11 gap-2 rounded-full px-5 text-sm font-medium transition-colors duration-200 ease-out focus-visible:ring-0",
+            variant === "primary"
+              ? "border-transparent bg-bone text-ink hover:bg-bone focus-visible:border-transparent"
+              : "border-ash bg-transparent text-bone hover:border-bone/60 hover:bg-transparent focus-visible:border-ash",
           )}
         >
-          <AndroidGlyph className="size-4 text-ash" />
-          Join Android waitlist
+          {icon}
+          {label}
         </a>
       )}
       {/* Always-mounted live region so state changes actually announce */}

@@ -85,16 +85,16 @@ export default function DownloadPage() {
       <Section>
         <Container className="rounded-3xl border border-ash/15 bg-bone/[0.02] px-8 py-12 text-center">
           <p className="text-[15px] leading-relaxed text-bone/70">
-            Want to know what's shipped lately?
+            Want to see what we&apos;re building?
           </p>
           <Link
-            href="/changelog"
+            href="/roadmap"
             className={cn(
               buttonVariants(),
               "mx-auto mt-6 h-10 rounded-full border-ash bg-transparent px-5 text-sm font-medium text-bone hover:border-bone/60 hover:bg-transparent",
             )}
           >
-            Read the changelog
+            View the roadmap
           </Link>
         </Container>
       </Section>

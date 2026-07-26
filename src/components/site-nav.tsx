@@ -7,16 +7,15 @@ import { LogoMark, MenuGlyph } from "@/components/icons";
 type NavItem = { label: string; href: string };
 
 const NAV_ITEMS: readonly NavItem[] = [
-  { label: "Product", href: "/product" },
-  { label: "Hosts", href: "/hosts" },
-  { label: "Rewards", href: "/rewards" },
+  { label: "Hosting", href: "/hosts" },
+  { label: "Our Story", href: "/company" },
+  { label: "Premium", href: "/premium" },
   { label: "Pricing", href: "/pricing" },
-  { label: "Changelog", href: "/changelog" },
-  { label: "Company", href: "/company" },
+  { label: "Roadmap", href: "/roadmap" },
 ] as const;
 
 /* Items that stay visible between 600–899px (§9); the rest drop out. */
-const COMPACT_ITEMS = new Set(["Product", "Pricing", "Changelog"]);
+const COMPACT_ITEMS = new Set(["Hosting", "Pricing", "Roadmap"]);
 
 /* overlay — floats over the landing hero (absolute, transparent).
  * solid   — a normal header for interior pages (ink background + hairline). */
