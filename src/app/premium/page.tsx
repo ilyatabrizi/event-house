@@ -60,14 +60,8 @@ export default function PremiumPage() {
       <PageHero
         eyebrow="Premium"
         title="The rooms that don't get posted."
-        lede="Some of the best tables, nights, and experiences in a city never make it to the public feed. Premium is how you hear about them."
-      >
-        <p className="max-w-[640px] text-[16px] leading-relaxed text-bone/75">
-          Founding memberships are capped at 250 members. We built Premium around
-          access, community, and experiences that are curated rather than
-          mass-produced.
-        </p>
-      </PageHero>
+        lede="Some of the best tables, nights, and experiences in a city never make it to the public feed. Premium is how you hear about them. Founding memberships are capped at 250 members — access, community, and experiences that are curated rather than mass-produced."
+      />
 
       <Section>
         <Grid cols={2}>

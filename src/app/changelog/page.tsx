@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
-import Link from "next/link";
-import { buttonVariants } from "@/components/ui/button";
 import { Card, Container, PageHero, PageShell, Section } from "@/components/page-shell";
-import { cn } from "@/lib/utils";
+import { WaitlistCta } from "@/components/waitlist-cta";
 
 export const metadata: Metadata = {
   title: "Changelog — Event House",
@@ -112,25 +110,18 @@ export default function ChangelogPage() {
           {RELEASES.map((release) => (
             <Card key={release.version} className="md:flex md:gap-10">
               <div className="mb-5 shrink-0 md:mb-0 md:w-40">
-                <p className="font-mono text-[13px] font-medium text-bone">
-                  {release.version}
-                </p>
+                <p className="font-mono text-[13px] font-medium text-bone">{release.version}</p>
                 <p className="mt-1 font-mono text-[11px] uppercase tracking-[0.12em] text-ash">
                   {release.date ?? release.status}
                 </p>
               </div>
 
               <div className="md:flex-1">
-                <h2 className="text-[16px] font-semibold text-bone">
-                  {release.title}
-                </h2>
+                <h2 className="text-[16px] font-semibold text-bone">{release.title}</h2>
                 <ul className="mt-4 flex flex-col gap-3 text-[14px] leading-relaxed text-bone/80">
                   {release.changes.map((change) => (
                     <li key={change} className="flex gap-3">
-                      <span
-                        aria-hidden="true"
-                        className="mt-[7px] h-1 w-1 shrink-0 rounded-full bg-ash"
-                      />
+                      <span aria-hidden="true" className="mt-[7px] h-1 w-1 shrink-0 rounded-full bg-ash" />
                       {change}
                     </li>
                   ))}
@@ -141,25 +132,16 @@ export default function ChangelogPage() {
         </div>
       </Section>
 
-      <Section
-        title="On the roadmap"
-        intro="Not shipped yet, but on the way. Dates land here once they're real."
-      >
+      <Section title="On the roadmap" intro="Not shipped yet, but on the way. Dates land here once they're real.">
         <div className="flex flex-col gap-4">
           {ROADMAP.map((item) => (
             <Card key={item.title} className="md:flex md:gap-10">
               <div className="mb-4 shrink-0 md:mb-0 md:w-40">
-                <p className="font-mono text-[11px] uppercase tracking-[0.12em] text-ash">
-                  Planned
-                </p>
+                <p className="font-mono text-[11px] uppercase tracking-[0.12em] text-ash">Planned</p>
               </div>
               <div className="md:flex-1">
-                <h3 className="text-[15px] font-semibold text-bone">
-                  {item.title}
-                </h3>
-                <p className="mt-2 text-[14px] leading-relaxed text-bone/65">
-                  {item.blurb}
-                </p>
+                <h3 className="text-[15px] font-semibold text-bone">{item.title}</h3>
+                <p className="mt-2 text-[14px] leading-relaxed text-bone/65">{item.blurb}</p>
               </div>
             </Card>
           ))}
@@ -169,22 +151,24 @@ export default function ChangelogPage() {
       <Section>
         <Container className="rounded-3xl border border-ash/15 bg-bone/[0.02] px-8 py-14 text-center">
           <h2 className="text-[26px] font-semibold tracking-[-0.02em] text-bone sm:text-[32px]">
-            Get the latest, on your phone.
+            Get in before the doors open.
           </h2>
           <p className="mx-auto mt-4 max-w-[440px] text-[15px] leading-relaxed text-bone/65">
-            Every release ships to iOS first. Download Event House and go out.
+            Waitlist members in Dubai get early access and two months of Premium
+            free when we launch.
           </p>
-          <Link
-            href="/download"
-            className={cn(
-              buttonVariants(),
-              "mx-auto mt-8 h-11 rounded-full border-transparent bg-bone px-6 text-sm font-medium text-ink hover:bg-bone",
-            )}
-          >
-            Download for iOS
-          </Link>
+          <div className="mx-auto mt-8 flex justify-center">
+            <WaitlistCta
+              id="eh-cta-changelog-waitlist"
+              label="Join the waitlist"
+              icon={null}
+              ariaLabel="Email address for the waitlist"
+              variant="primary"
+            />
+          </div>
         </Container>
       </Section>
     </PageShell>
   );
 }
+

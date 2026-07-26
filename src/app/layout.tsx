@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Instrument_Sans, Space_Mono } from "next/font/google";
+import { BRAND_TAGLINE } from "@/lib/brand";
 import "./globals.css";
 
 const instrumentSans = Instrument_Sans({
@@ -18,7 +19,7 @@ const spaceMono = Space_Mono({
 export const metadata: Metadata = {
   title: "Event House",
   description:
-    "Discover events near you, host your own, and keep a record of every good night — all from your phone.",
+    `${BRAND_TAGLINE} wentoevent helps you discover what's happening near you, host your own events, and remember where you've been.`,
   icons: {
     icon: [
       { url: "/logo/Web/favicon_16.png", sizes: "16x16", type: "image/png" },

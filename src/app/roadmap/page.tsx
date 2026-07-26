@@ -98,16 +98,11 @@ const STATUS_STYLE: Record<RoadmapStatus, string> = {
 export default function RoadmapPage() {
   return (
     <PageShell>
-      <PageHero eyebrow="Roadmap" title="What we're building, in the open.">
-        <div className="max-w-[640px] space-y-4 text-[17px] leading-relaxed text-bone/75">
-          <p>wentoevent isn&apos;t out yet.</p>
-          <p>
-            Instead of pretending we have a changelog before we have a product,
-            here&apos;s exactly where things stand and what&apos;s coming next.
-          </p>
-          <p>Dates will appear here only when they&apos;re real.</p>
-        </div>
-      </PageHero>
+      <PageHero
+        eyebrow="Roadmap"
+        title="What we're building, in the open."
+        lede="wentoevent isn't out yet. Instead of pretending we have a changelog before we have a product, here's exactly where things stand and what's coming next. Dates will appear here only when they're real."
+      />
 
       <Section>
         <div className="flex flex-col gap-4">
