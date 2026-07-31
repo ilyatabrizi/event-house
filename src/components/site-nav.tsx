@@ -2,7 +2,9 @@
 
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import { LogoMark, MenuGlyph } from "@/components/icons";
+import { ArrowLeftGlyph, LogoMark, MenuGlyph } from "@/components/icons";
+import { buttonVariants } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 type NavItem = { label: string; href: string };
 
@@ -69,16 +71,29 @@ export function SiteNav({ variant = "overlay" }: { variant?: "overlay" | "solid"
   return (
     <nav className={navClass}>
       <div className="mx-auto flex max-w-[1200px] items-center justify-between px-6 md:px-8 lg:px-12">
-        <Link
-          href="/"
-          aria-label="Event House home"
-          className="flex items-center gap-[10px]"
-        >
-          <LogoMark id="eh-logomark" className="h-5 w-5 text-bone" />
-          <span className="text-[15px] font-semibold tracking-[-0.01em] text-bone">
-            Event House
-          </span>
-        </Link>
+        <div className="flex min-w-0 items-center gap-3 sm:gap-4">
+          {variant === "solid" && (
+            <Link
+              href="/"
+              aria-label="Back to homepage"
+              className="flex shrink-0 items-center gap-1.5 text-[13px] font-medium text-ash transition-colors duration-150 hover:text-bone"
+            >
+              <ArrowLeftGlyph className="h-4 w-4" />
+              <span className="hidden sm:inline">Home</span>
+            </Link>
+          )}
+
+          <Link
+            href="/"
+            aria-label="Event House home"
+            className="flex min-w-0 items-center gap-[10px]"
+          >
+            <LogoMark id="eh-logomark" className="h-5 w-5 shrink-0 text-bone" />
+            <span className="truncate text-[15px] font-semibold tracking-[-0.01em] text-bone">
+              Event House
+            </span>
+          </Link>
+        </div>
 
         <ul className="hidden items-center gap-8 sm:flex">
           {NAV_ITEMS.map((item) => (
@@ -98,21 +113,16 @@ export function SiteNav({ variant = "overlay" }: { variant?: "overlay" | "solid"
           ))}
         </ul>
 
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-3 sm:gap-4">
           <Link
-            id="eh-account"
+            id="eh-cta-nav-waitlist"
             href="/download"
-            aria-label="Get Event House"
-            className="flex items-center gap-1"
+            className={cn(
+              buttonVariants(),
+              "hidden h-9 rounded-full border-transparent bg-bone px-4 text-[13px] font-medium text-ink hover:bg-bone sm:inline-flex",
+            )}
           >
-            <span className="flex h-7 w-7 items-center justify-center rounded-full border border-ash bg-ink text-[10px] font-medium text-bone">
-              NS
-            </span>
-            {/* Account-online dot — a permitted UI use of Ember (§5.1.1) */}
-            <span
-              aria-hidden="true"
-              className="h-2 w-2 rounded-full bg-ember shadow-[0_0_6px_rgba(255,91,61,0.4)]"
-            />
+            Join waitlist
           </Link>
 
           <button
@@ -148,6 +158,16 @@ export function SiteNav({ variant = "overlay" }: { variant?: "overlay" | "solid"
               {item.label}
             </Link>
           ))}
+          <Link
+            href="/download"
+            onClick={closeMenu}
+            className={cn(
+              buttonVariants(),
+              "mt-2 h-11 rounded-full border-transparent bg-bone px-6 text-sm font-medium text-ink hover:bg-bone",
+            )}
+          >
+            Join waitlist
+          </Link>
         </div>
       )}
     </nav>

@@ -1,5 +1,6 @@
 export { AndroidGlyph } from "@/components/icons/android-glyph";
 export { AppleGlyph } from "@/components/icons/apple-glyph";
+export { ArrowLeftGlyph } from "@/components/icons/arrow-left-glyph";
 export { BatteryGlyph } from "@/components/icons/battery-glyph";
 export { LogoMark } from "@/components/icons/logo-mark";
 export { MenuGlyph } from "@/components/icons/menu-glyph";
