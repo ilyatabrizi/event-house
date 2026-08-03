@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Instrument_Sans, Space_Mono } from "next/font/google";
+import { siteMetadata } from "@/lib/site-metadata";
 import "./globals.css";
 
 const instrumentSans = Instrument_Sans({
@@ -16,9 +17,7 @@ const spaceMono = Space_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Event House",
-  description:
-    "Discover events near you, host your own, and keep a record of every good night — all from your phone.",
+  ...siteMetadata,
   icons: {
     icon: [
       { url: "/logo/Web/favicon_16.png", sizes: "16x16", type: "image/png" },
