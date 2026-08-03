@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { buttonVariants } from "@/components/ui/button";
+import { FoundingHostForm } from "@/components/founding-host-application";
 import {
   Card,
   Container,
@@ -10,12 +11,13 @@ import {
   PageShell,
   Section,
 } from "@/components/page-shell";
+import { foundingHostWhatsAppUrl } from "@/lib/contact-links";
 import { cn } from "@/lib/utils";
 
 export const metadata: Metadata = {
-  title: "For Hosts — Event House",
+  title: "Hosting — Event House",
   description:
-    "Everything you need to run events people remember — from a first invite to check-in at the door. Create, invite, and host with Event House.",
+    "Everything you need before the doors open, and after. wentoevent gives you the tools to run events without the usual chaos.",
 };
 
 type HostFeature = {
@@ -25,32 +27,32 @@ type HostFeature = {
 
 const FEATURES: HostFeature[] = [
   {
-    title: "Create an event in minutes",
-    body: "A focused flow that gets you from idea to published page fast. Set the time, place, and vibe — we handle the rest.",
+    title: "Create in minutes",
+    body: "Go from idea to a published event page in minutes. Set the time, location, capacity, ticketing, and who can see your event.",
   },
   {
-    title: "Beautiful invites & shareable links",
-    body: "Every event gets a page worth sharing. Drop one link anywhere and watch it fill up.",
+    title: "Shareable event pages",
+    body: "Every event gets a page worth sharing. Drop one link into your group chats, social channels, or website and let registrations roll in.",
   },
   {
     title: "Guest lists & RSVPs",
-    body: "Track who's in, who's a maybe, and who's on the waitlist — all updated in real time.",
+    body: "See who's confirmed, who's maybe, and who's on the waitlist, all updated in real time.",
   },
   {
-    title: "Ticketing with low flat fees",
-    body: "Sell tickets without losing a cut to percentages. A low flat fee per ticket, shown before you publish.",
+    title: "Ticketing",
+    body: "Ticketed events are charged a simple, flat AED 4 platform fee per paid ticket. No percentage of your ticket revenue. No complicated pricing. Free events stay free.",
   },
   {
-    title: "Check-in & door tools",
-    body: "Scan guests in from your phone. See capacity at a glance and keep the line moving.",
+    title: "Check-in",
+    body: "Scan guests with your phone. See capacity at a glance, manage arrivals, and keep the line moving.",
   },
   {
     title: "Co-hosts & roles",
-    body: "Bring in your team with the right permissions. Share the load without sharing your password.",
+    body: "Invite your team with the right permissions. Share the work, not your password.",
   },
   {
-    title: "Audience insights & exports",
-    body: "Understand who shows up over time. Export your guest data whenever you need it.",
+    title: "Reports & exports",
+    body: "Understand who actually shows up over time and export your guest data whenever you need it.",
   },
 ];
 
@@ -64,54 +66,64 @@ const STEPS: Step[] = [
   {
     number: "01",
     title: "Create",
-    body: "Spin up an event page in a few taps. Add the details that matter and set your capacity, tickets, and guest list rules.",
+    body: "Build your event page in a few taps. Set capacity, tickets, visibility, and guest list rules.",
   },
   {
     number: "02",
     title: "Invite",
-    body: "Share one link or invite from your circles. RSVPs and waitlists fill in automatically as word spreads.",
+    body: "Share one link. Registrations and waitlists update automatically, so you can focus on the event instead of managing spreadsheets.",
   },
   {
     number: "03",
     title: "Host",
-    body: "Run the door from your phone, check guests in, and keep an eye on the room — then review who came when it's over.",
+    body: "Manage check-in from your phone, welcome your guests, and see who attended afterward.",
   },
+];
+
+const FOUNDING_HOST_BENEFITS = [
+  "1 year of Host Pro for free",
+  "Permanent public publishing access",
+  "Early access to new features and the chance to shape them before they're built",
+  "Day-one exposure to the wentoevent audience",
+];
+
+const FOUNDING_HOST_ASKS = [
+  "Host at least two events in your first three months",
+  "Let us feature one of your events as a case study",
+  "Give us honest feedback about what's working and what's broken",
 ];
 
 export default function HostsPage() {
   return (
     <PageShell>
       <PageHero
-        eyebrow="For hosts"
-        title="Run nights people remember."
-        lede="Hosting shouldn't feel like admin. Event House gives you invites, guest lists, ticketing, and door tools in one place — so you can focus on the night, not the logistics."
+        eyebrow="Hosting"
+        title="Everything you need before the doors open, and after."
+        lede="From your first idea to the final guest leaving, wentoevent gives you the tools to run events without the usual chaos."
       >
         <div className="flex flex-wrap items-center gap-3">
           <Link
-            href="/download"
+            href="#founding-host-application"
             className={cn(
               buttonVariants(),
               "h-11 rounded-full border-transparent bg-bone px-6 text-sm font-medium text-ink hover:bg-bone",
             )}
           >
-            Start hosting
+            Apply to become a Founding Host
           </Link>
-          <Link
-            href="/pricing"
+          <a
+            href={foundingHostWhatsAppUrl()}
             className={cn(
               buttonVariants(),
               "h-11 rounded-full border-ash bg-transparent px-6 text-sm font-medium text-bone hover:border-bone/60 hover:bg-transparent",
             )}
           >
-            See Host Pro
-          </Link>
+            Message us on WhatsApp
+          </a>
         </div>
       </PageHero>
 
-      <Section
-        title="Everything you need at the door and beyond"
-        intro="From the first invite to the last guest out, the tools that make a great night run itself."
-      >
+      <Section>
         <Grid>
           {FEATURES.map((feature) => (
             <Feature key={feature.title} title={feature.title}>
@@ -121,10 +133,7 @@ export default function HostsPage() {
         </Grid>
       </Section>
 
-      <Section
-        title="From idea to open doors in three steps"
-        intro="However big the night, the shape is the same."
-      >
+      <Section title="From idea to opening the doors, in three steps.">
         <Grid>
           {STEPS.map((step) => (
             <Card key={step.number} className="flex flex-col">
@@ -142,36 +151,41 @@ export default function HostsPage() {
         </Grid>
       </Section>
 
-      <Section>
-        <Container className="rounded-3xl border border-ash/15 bg-bone/[0.02] px-8 py-14 text-center">
-          <h2 className="text-[26px] font-semibold tracking-[-0.02em] text-bone sm:text-[32px]">
-            Your next night starts here.
-          </h2>
-          <p className="mx-auto mt-4 max-w-[460px] text-[15px] leading-relaxed text-bone/65">
-            Set up your first event free. When you're ready for ticketing, door
-            tools, and insights, Host Pro is waiting.
+      <Section
+        id="founding-host-application"
+        title="We're selecting the first 40 Founding Hosts in Dubai."
+      >
+        <div className="max-w-[640px] space-y-5 text-[16px] leading-relaxed text-bone/75">
+          <p>
+            Founding Hosts are the first people helping us shape how events
+            happen on wentoevent.
           </p>
-          <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-            <Link
-              href="/download"
-              className={cn(
-                buttonVariants(),
-                "h-11 rounded-full border-transparent bg-bone px-6 text-sm font-medium text-ink hover:bg-bone",
-              )}
-            >
-              Start hosting
-            </Link>
-            <Link
-              href="/pricing"
-              className={cn(
-                buttonVariants(),
-                "h-11 rounded-full border-ash bg-transparent px-6 text-sm font-medium text-bone hover:border-bone/60 hover:bg-transparent",
-              )}
-            >
-              Explore Host Pro
-            </Link>
+          <p>Founding Hosts receive:</p>
+          <ul className="flex flex-col gap-2 pl-1">
+            {FOUNDING_HOST_BENEFITS.map((item) => (
+              <li key={item}>{item}</li>
+            ))}
+          </ul>
+          <p>In return, we ask for three things:</p>
+          <ul className="flex flex-col gap-2 pl-1">
+            {FOUNDING_HOST_ASKS.map((item) => (
+              <li key={item}>{item}</li>
+            ))}
+          </ul>
+          <p className="text-bone">
+            Tell us what you&apos;re hosting. We&apos;ll get back to you within
+            48 hours.
+          </p>
+        </div>
+
+        <div className="mt-12 max-w-[520px]">
+          <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-ash">
+            Application
+          </p>
+          <div className="mt-6">
+            <FoundingHostForm />
           </div>
-        </Container>
+        </div>
       </Section>
     </PageShell>
   );

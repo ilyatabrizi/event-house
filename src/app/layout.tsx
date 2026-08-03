@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Instrument_Sans, Space_Mono } from "next/font/google";
 import { siteMetadata } from "@/lib/site-metadata";
+import { BRAND_TAGLINE } from "@/lib/brand";
 import "./globals.css";
 
 const instrumentSans = Instrument_Sans({
@@ -18,6 +19,8 @@ const spaceMono = Space_Mono({
 
 export const metadata: Metadata = {
   ...siteMetadata,
+  title: "Event House",
+  description: `${BRAND_TAGLINE} wentoevent helps you discover what's happening near you, host your own events, and remember where you've been.`,
   icons: {
     icon: [
       { url: "/logo/Web/favicon_16.png", sizes: "16x16", type: "image/png" },
@@ -48,13 +51,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="en"
-      className={`${instrumentSans.variable} ${spaceMono.variable} h-full antialiased`}
-    >
-      <body className="flex min-h-full flex-col bg-ink font-sans text-bone">
-        {children}
-      </body>
+    <html lang="en" className={`${instrumentSans.variable} ${spaceMono.variable} h-full antialiased`}>
+      <body className="flex min-h-full flex-col bg-ink font-sans text-bone">{children}</body>
     </html>
   );
 }

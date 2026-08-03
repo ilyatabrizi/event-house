@@ -2,14 +2,16 @@
  * `glow` / `wash` / `spark` drive the luxury atmosphere that morphs with the screen.
  * `mobileTitle` / `mobileCopy` are shorter beats for the horizontal phone carousel. */
 
+import { BRAND_TAGLINE, BRAND_TAGLINE_SHORT } from "@/lib/brand";
+
 export const FRAMES = [
   {
     id: 1,
     label: "Home",
-    title: "The city has plans tonight.",
-    copy: "A feed that knows Dubai — recommended nights, who's going, and what it costs.",
-    mobileTitle: "Tonight, near you.",
-    mobileCopy: "Recommended nights, who's going, and what it costs.",
+    title: BRAND_TAGLINE,
+    copy: "Discover what's on near you, see who's going, and find something worth showing up for.",
+    mobileTitle: BRAND_TAGLINE_SHORT,
+    mobileCopy: "Discover events, host your own, and remember the nights that matter.",
     image: "/covercase/01-home.png",
     color: "#0A0A0A",
     accent: "#FF5B3D",
@@ -20,10 +22,10 @@ export const FRAMES = [
   {
     id: 2,
     label: "Discover",
-    title: "Find your night.",
-    copy: "Search events, hosts, and places — or browse by the mood you're after.",
+    title: "Find something worth showing up for.",
+    copy: "Browse events by mood, time, and distance — or search hosts, places, and what's on this week.",
     mobileTitle: "Find your night.",
-    mobileCopy: "Browse by mood, host, or place.",
+    mobileCopy: "Browse by mood, time, or place.",
     image: "/covercase/02-discover.png",
     color: "#0A0A0A",
     accent: "#FF5B3D",
@@ -34,10 +36,10 @@ export const FRAMES = [
   {
     id: 3,
     label: "Profile",
-    title: "Your night out, filed.",
-    copy: "Posts, events, and the people who follow where you go.",
-    mobileTitle: "Your nights, filed.",
-    mobileCopy: "Posts, events, and who follows along.",
+    title: "Remember where you've been.",
+    copy: "Your events, your posts, and the nights that made your city feel like yours.",
+    mobileTitle: "Your nights, remembered.",
+    mobileCopy: "Events, posts, and the places you've been.",
     image: "/covercase/03-profile.png",
     color: "#0C1210",
     accent: "#FF5B3D",
@@ -62,10 +64,10 @@ export const FRAMES = [
   {
     id: 5,
     label: "Premium",
-    title: "For people who go out often.",
-    copy: "A verified badge, members-only nights, and a concierge in every city.",
-    mobileTitle: "For people who go out.",
-    mobileCopy: "Verified badge, members-only nights.",
+    title: "The rooms that don't get posted.",
+    copy: "Members-only events, priority RSVP, zero booking fees, and a City Concierge in every city.",
+    mobileTitle: "Rooms that don't get posted.",
+    mobileCopy: "Members-only nights, priority RSVP, City Concierge.",
     image: "/covercase/05-premium.png",
     color: "#10100E",
     accent: "#C9A46A",

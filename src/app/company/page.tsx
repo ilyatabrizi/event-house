@@ -1,70 +1,88 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { buttonVariants } from "@/components/ui/button";
-import {
-  Container,
-  Feature,
-  Grid,
-  PageHero,
-  PageShell,
-  Section,
-} from "@/components/page-shell";
+import { Container, Feature, Grid, PageHero, PageShell, Section } from "@/components/page-shell";
+import { WaitlistCta } from "@/components/waitlist-cta";
+import { BRAND_TAGLINE } from "@/lib/brand";
 import { cn } from "@/lib/utils";
 
 export const metadata: Metadata = {
-  title: "Company — Event House",
+  title: "Our Story — Event House",
   description:
-    "The story behind Event House — an iOS-first app to discover, host, and remember the events that make a city worth living in.",
+    "Event House is the company behind wentoevent — an iOS-first platform to discover what's happening, bring people together, and remember where you've been.",
 };
 
 const VALUES = [
   {
     title: "Real life, first",
-    body: "The point isn't more screen time. It's a better Friday. Everything we build should end with you somewhere, with people, doing something worth showing up for.",
+    body: "The point isn't more screen time. It's a better Saturday. Everything we build should ultimately lead somewhere offline, with real people, in real places.",
   },
   {
     title: "Hosts are heroes",
-    body: "Every good night starts with someone brave enough to plan it. We give hosts the tools to invite, organize, and pull it off without the chaos.",
+    body: "Every great event starts with someone willing to make it happen. We give hosts the tools to create, manage, and grow their events without the usual chaos. No spreadsheets. No juggling five different platforms. And no percentage taken from your ticket sales.",
   },
   {
     title: "Your memories are yours",
-    body: "Your nights, your guest lists, your photos — they belong to you. We keep them safe, we don't sell them, and we never make you the product.",
+    body: "Your events. Your guest lists. Your photos. Your history. We keep them safe, give you control over what you share, and never treat your personal life as a product.",
   },
   {
-    title: "Local over global",
-    body: "The best events aren't trending worldwide. They're three blocks away, run by people who care. We build for the neighborhood, not the algorithm.",
+    title: "Local, everywhere",
+    body: "The best things don't always trend worldwide. Sometimes they're three streets away, run by people who care deeply about what they do. That's true in every city. We build city by city, so every map is worth opening.",
   },
+];
+
+const INVESTOR_FLYWHEEL = [
+  "People discover events.",
+  "Events bring people together.",
+  "People create new connections.",
+  "Those connections create more reasons to go out.",
+  "And every experience becomes part of a personal history that makes the platform more valuable over time.",
+];
+
+const SPONSOR_BENEFITS = [
+  "Sponsor curated events and experiences",
+  "Partner with hosts and local communities",
+  "Create branded experiences",
+  "Reach targeted lifestyle audiences",
+  "Support city-wide campaigns and activations",
 ];
 
 export default function CompanyPage() {
   return (
     <PageShell>
       <PageHero
-        eyebrow="Our story"
-        title="We think the best nights start with a plan."
-        lede="Event House is an iOS-first way to discover what's happening near you, host things worth showing up for, and keep the nights you'll want to remember."
+        eyebrow="Our Story"
+        title={BRAND_TAGLINE}
+        lede="Every city is full of things to do. We built wentoevent because great plans are scattered across chats and feeds — and because we kept missing the ones worth showing up for."
       />
 
-      <Section title="Why we're building this">
+      <Section>
         <div className="max-w-[640px] space-y-5 text-[16px] leading-relaxed text-bone/75">
+          <p>Every city is full of things to do.</p>
           <p>
-            Cities are overflowing with things to do. Somewhere tonight there's a
-            listening party, a run club, a stoop show, a dinner for twelve. The
-            problem was never a shortage of good nights — it's that the good ones
-            are buried, scattered across a dozen apps and group chats, and gone
-            by the time you hear about them.
+            This morning, somewhere near you, there&apos;s a run club, a padel game looking for one more player, a
+            workshop, a dinner for twenty, or a night you would have loved if you&apos;d known about it in time.
           </p>
           <p>
-            We started Event House because we kept missing things we would have
-            loved, and forgetting the ones we made it to. So we built one place
-            to find what's on, to host your own without wrangling five tools, and
-            to keep a real record of where you've been and who you were with.
+            The problem was never a shortage of good plans. It&apos;s that they&apos;re scattered across WhatsApp
+            groups, Instagram stories, private chats, and places you&apos;ll never think to look. And if you&apos;ve
+            just landed in a new city, you&apos;re not in any of those groups at all.
           </p>
           <p>
-            It's a simple idea with a stubborn belief underneath it: the internet
-            should get you out the door, not keep you on the couch. If Event House
-            ends more of your weeks with a story worth telling, we've done our
-            job.
+            We built wentoevent because we kept missing things we would have loved, and forgetting the ones we actually
+            made it to.
+          </p>
+          <p>
+            So we&apos;re building one place to discover what&apos;s happening, bring people together, and remember
+            where you&apos;ve been.
+          </p>
+          <p>
+            Create your own event without juggling five different tools. Find something worth showing up for. Meet
+            people who are already going. And keep a record of the places, events, and moments that made your city feel
+            like yours.
+          </p>
+          <p className="text-bone">
+            Our belief is simple: the internet should get you out the door, not keep you on the couch.
           </p>
         </div>
       </Section>
@@ -82,43 +100,124 @@ export default function CompanyPage() {
       <Section title="The team">
         <div className="max-w-[640px] space-y-5 text-[16px] leading-relaxed text-bone/75">
           <p>
-            We're a small team who care a little too much about a well-run night.
-            We host our own events, use the app every weekend, and read every note
-            people send us.
+            We&apos;re a small team who care a little too much about a well-run event. We host our own. We build the
+            product we kept wishing existed. And we read every message people send us.
           </p>
           <p>
-            If any of this resonates — whether you want to build with us, host
-            with us, or just tell us what we're getting wrong —{" "}
+            We&apos;re starting with events, but our ambition goes further: to build the layer between people and the
+            cities they live in.
+          </p>
+          <p>
+            If you want to host with us, work with us, partner with us, or tell us what we&apos;re getting wrong,
+            we&apos;d genuinely like to hear from you.{" "}
             <Link
               href="/contact"
               className="text-bone underline decoration-ash/40 underline-offset-4 transition-colors hover:decoration-bone"
             >
-              get in touch
+              Get in touch
             </Link>
-            . We'd love to hear from you.
+            .
           </p>
+        </div>
+      </Section>
+
+      <Section title="Build the future of going out with us.">
+        <div className="max-w-[640px] space-y-5 text-[16px] leading-relaxed text-bone/75">
+          <p>
+            Event House is the company behind wentoevent, an iOS-first platform built to help people discover
+            what&apos;s happening, bring people together, and turn nights out into memories worth keeping.
+          </p>
+          <p>
+            We&apos;re starting with events, but we&apos;re building something bigger: a new way for people to
+            experience the cities they live in and visit.
+          </p>
+        </div>
+      </Section>
+
+      <Section title="For investors">
+        <div className="max-w-[640px] space-y-5 text-[16px] leading-relaxed text-bone/75">
+          <p>We&apos;re building the layer between people and the cities they live in.</p>
+          <p>
+            Today, real-world experiences are fragmented across social media, messaging apps, event platforms, ticketing
+            services, and word of mouth.
+          </p>
+          <p>
+            wentoevent brings discovery, social connection, hosting, ticketing, and memories into one ecosystem. The
+            more people use it, the more useful it becomes.
+          </p>
+          <ul className="flex flex-col gap-2 pl-1">
+            {INVESTOR_FLYWHEEL.map((item) => (
+              <li key={item}>{item}</li>
+            ))}
+          </ul>
+          <p>We&apos;re building for cities, communities, hosts, venues, and the people who make them come alive.</p>
+          <p>
+            We&apos;re looking for partners who believe the next generation of social products should move people from
+            screens into real life.
+          </p>
+          <p className="pt-2 text-bone">Interested in investing in Event House?</p>
+          <Link
+            href="mailto:hello@eventhouse.app?subject=Investment%20inquiry"
+            className={cn(
+              buttonVariants(),
+              "inline-flex h-11 rounded-full border-transparent bg-bone px-6 text-sm font-medium text-ink hover:bg-bone",
+            )}
+          >
+            Talk to the founders
+          </Link>
+        </div>
+      </Section>
+
+      <Section title="For sponsors & brand partners">
+        <div className="max-w-[640px] space-y-5 text-[16px] leading-relaxed text-bone/75">
+          <p>Your audience isn&apos;t just online. They&apos;re out there.</p>
+          <p>wentoevent gives brands a way to become part of the moments people actually remember.</p>
+          <p>
+            From music and nightlife to fitness, food, culture, travel, and everything in between, we help brands
+            connect with relevant communities through real-world experiences.
+          </p>
+          <p>Partner with us to:</p>
+          <ul className="flex flex-col gap-2 pl-1">
+            {SPONSOR_BENEFITS.map((item) => (
+              <li key={item}>{item}</li>
+            ))}
+          </ul>
+          <p>Let&apos;s create something people want to show up for.</p>
+          <Link
+            href="mailto:partners@eventhouse.app?subject=Partnership%20inquiry"
+            className={cn(
+              buttonVariants(),
+              "inline-flex h-11 rounded-full border-transparent bg-bone px-6 text-sm font-medium text-ink hover:bg-bone",
+            )}
+          >
+            Become a partner
+          </Link>
         </div>
       </Section>
 
       <Section>
         <Container className="rounded-3xl border border-ash/15 bg-bone/[0.02] px-8 py-14 text-center">
-          <h2 className="text-[26px] font-semibold tracking-[-0.02em] text-bone sm:text-[32px]">
-            The best nights don't just happen.
-          </h2>
-          <p className="mx-auto mt-4 max-w-[440px] text-[15px] leading-relaxed text-bone/65">
-            Discover, host, and remember them all in one place.
+          <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-ash">
+            We&apos;re building what&apos;s next.
           </p>
-          <Link
-            href="/download"
-            className={cn(
-              buttonVariants(),
-              "mx-auto mt-8 h-11 rounded-full border-transparent bg-bone px-6 text-sm font-medium text-ink hover:bg-bone",
-            )}
-          >
-            Get Event House
-          </Link>
+          <h2 className="mt-5 text-[26px] font-semibold tracking-[-0.02em] text-bone sm:text-[32px]">
+            {BRAND_TAGLINE}
+          </h2>
+          <p className="mx-auto mt-6 max-w-[440px] text-[15px] font-semibold leading-relaxed text-bone">
+            Event House
+          </p>
+          <div className="mx-auto mt-8 flex justify-center">
+            <WaitlistCta
+              id="eh-cta-company-waitlist"
+              label="Join the waitlist"
+              icon={null}
+              ariaLabel="Email address for the waitlist"
+              variant="primary"
+            />
+          </div>
         </Container>
       </Section>
     </PageShell>
   );
 }
+
